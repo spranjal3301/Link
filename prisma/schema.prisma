@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(uuid()) @db.Uuid
+  clerkId      String         @unique
+  email        String?        @unique
+  phone        String?        @unique  //~ change
+  firstname    String?        @unique
+  lastname     String?        @unique
+  createdAt    DateTime       @default(now())
+  subscription Subscription?
+  integrations Integrations[]
+  automations  Automation[]
+}
+
+model Subscription {
+  id         String            @id @default(uuid()) @db.Uuid
+  plan       SUBSCRIPTION_PLAN @default(FREE)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @default(now())
+  customerId String?           @unique
+  UserId     String            @unique @db.Uuid
+  User       User?             @relation(fields: [UserId], references: [id], onDelete: Cascade)
+}
+
+model Integrations {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        INTEGRATIONS @default(INSTAGRAM)
+  createdAt   DateTime     @default(now())
+  token       String       @unique
+  expiresAt   DateTime?
+  platformId String?      @unique     //~ instagramId
+  userId      String?      @db.Uuid
+  User        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Automation {
+  id        String    @id @default(uuid()) @db.Uuid
+  name      String    @default("Untitled")
+  createdAt DateTime  @default(now())
+  active    Boolean   @default(false)
+  trigger   Trigger[]
+  listener  Listener?
+  posts     Post[]
+  dms       Dms[]
+  keywords  Keyword[]
+  userId    String?   @db.Uuid
+  User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Post {
+  id           String      @id @default(uuid()) @db.Uuid
+  postid       String
+  caption      String?
+  media        String
+  mediaType    MEDIATYPE   @default(IMAGE)
+  automationId String?     @db.Uuid
+  Automation   Automation? @relation(fields: [automationId], references: [id], onDelete: Cascade)
+}
+
+model Dms {
+  id           String      @id @default(uuid()) @db.Uuid
+  createdAt    DateTime    @default(now())
+  senderId     String?
+  reciever     String?
+  message      String?
+  automationId String?     @db.Uuid
+  Automation   Automation? @relation(fields: [automationId], references: [id])
+}
+
+model Listener {
+  id           String     @id @default(uuid()) @db.Uuid
+  listener     LISTENERS  @default(MESSAGE)
+  prompt       String
+  commentReply String?
+  dmCount      Int        @default(0)
+  commentCount Int        @default(0)
+  automationId String     @unique @db.Uuid
+  Automation   Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
+}
+
+model Keyword {
+  id           String @id @default(uuid()) @db.Uuid
+  word         String
+  automationId String?     @db.Uuid
+  Automation   Automation? @relation(fields: [automationId], references: [id], onDelete: Cascade)
+
+  @@unique([automationId, word]) //~this constraints ensure user cant use the same keyword on multiple automations
+}
+
+model Trigger {
+  id           String     @id @default(uuid()) @db.Uuid
+  type         String    //~ comment or Dm
+  automationId String?     @db.Uuid
+  Automation   Automation? @relation(fields: [automationId], references: [id], onDelete: Cascade)
+}
+
+
+
+
+enum SUBSCRIPTION_PLAN {
+  FREE
+  PRO
+}
+
+enum INTEGRATIONS {
+  INSTAGRAM
+  X
+  LINKEDIN
+  WHATSAPP
+}
+
+enum MEDIATYPE {
+  IMAGE
+  VIDEO
+  CAROSEL_ALBUM
+}
+
+enum LISTENERS {
+  SMARTAI
+  MESSAGE
+}
