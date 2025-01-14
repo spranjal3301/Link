@@ -8,8 +8,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { BentoCard, BentoGrid } from "../ui/bento-grid";
 import Marquee from "../ui/marquee";
 import React from "react";
-import { AnimatedBeamMultipleOutputDemo } from "../global/animated-beam-multiple-output-demo";
-import { AnimatedListDemo } from "../global/animated-list-demo";
+import { AnimatedBeamMultipleOutputDemo } from "../global/Landing/animated-beam-multiple-output-demo";
+import { AnimatedListDemo } from "../global/Landing/animated-list-demo";
 import ShinyText from "../ui/shiny-text";
 
 const files = [

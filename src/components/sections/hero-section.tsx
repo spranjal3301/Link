@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import AnimatedShinyText from "../ui/animated-shiny-text";
 import AnimatedGridPattern from "../ui/animated-grid-pattern";
 import HeroVideoDialog from "../ui/hero-video-dialog";
-import GetStartedBtn from "../global/get-started-btn";
+import GetStartedBtn from "../global/Landing/get-started-btn";
 
 
 export default async function Hero() {

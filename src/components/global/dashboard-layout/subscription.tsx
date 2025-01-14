@@ -7,7 +7,7 @@ type Props = {
 };
 
 const SubscriptionPlane = ({ children, type = "FREE" }: Props) => {
-  //? query DB for user subsciption     if Pro return '' : children
+  //?WIP: query DB for user subsciption     if Pro return '' : children
   return children;
 };
 

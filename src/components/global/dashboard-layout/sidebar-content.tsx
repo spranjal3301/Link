@@ -14,9 +14,10 @@ import { Ellipsis } from 'lucide-react';
 interface Props {
     slug: string;
     page: string;
+    onItemClick?: () => void;
 }
 
-const SidebarContent: NextPage<Props> = ({page ,slug}) => {
+const SidebarContent: NextPage<Props> = ({page ,slug,onItemClick}) => {
   const {isSidebarOpen} = useSidebar();
 
   return (
@@ -35,7 +36,7 @@ const SidebarContent: NextPage<Props> = ({page ,slug}) => {
         </div>
 
         <div className="flex flex-col py-3">
-          <Itmes page={page} slug={slug} />
+          <Itmes page={page} slug={slug} onItemClick={onItemClick}/>
         </div>
 
         <div className={cn("",

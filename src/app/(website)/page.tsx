@@ -1,4 +1,4 @@
-import { ModalBodyContent } from "@/components/global/loginBtn";
+import { ModalBodyContent } from "@/components/global/Landing/loginBtn";
 import { CTA } from "@/components/sections/cta";
 import Feature from "@/components/sections/feature";
 import Footer from "@/components/sections/footer";

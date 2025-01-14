@@ -1,32 +1,12 @@
-import { Link } from "next-view-transitions";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { SidebarMenu } from "./sidebar-itmes";
 import SidebarContent from "./sidebar-content";
 
-export interface NavItem {
-  id: string | number;
-  title: string;
-  href: string;
-  description?: string;
-  count?: number | string;
-  isComingSoon?: boolean;
-  isNew?: boolean;
-  isLab?: boolean;
-}
 
-export interface NavSection {
-  title: string;
-  items: NavItem[];
-}
 
 interface MobileNavProps {
-  sections: NavSection[];
-  pathname: string;
   isExpanded: boolean;
   currentPage?: string;
-  totalItems: number;
   onExpandToggle: () => void;
   onItemClick: () => void;
   icon:React.ReactNode;
@@ -35,12 +15,9 @@ interface MobileNavProps {
 }
 
 export function MobileNav({
-  sections,
   icon,
-  pathname,
   isExpanded,
   currentPage,
-  totalItems,
   onExpandToggle,
   onItemClick,
   page,
@@ -72,7 +49,7 @@ export function MobileNav({
         {isExpanded ? (
           <div className="h-full flex flex-col">
             <div className="flex-1 px-4 py-2">
-                <SidebarContent page={page} slug={slug}  />
+                <SidebarContent page={page} slug={slug} onItemClick={onItemClick} />
             </div>
 
             <div className="p-4 border-t border-zinc-200 dark:border-zinc-800">

@@ -1,5 +1,5 @@
 import ShinyText from "../ui/shiny-text";
-import GetStartedBtn from '../global/get-started-btn';
+import GetStartedBtn from '../global/Landing/get-started-btn';
 
 export const CTA = () => (
   <section id="cta">

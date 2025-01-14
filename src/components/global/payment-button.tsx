@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 type Props = {};
 
 function PaymentButton({}: Props) {
-  //? get their subscription detail
+  //?WIP: get their subscription detail
   return (
     <Button className="text-white rounded-full font-bold bg-gradient-to-br from-main2 to-main1">
       Upgrade

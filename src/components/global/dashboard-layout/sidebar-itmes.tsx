@@ -1,53 +1,19 @@
-import {
-  AutomationDuoToneWhite,
-  HomeDuoToneWhite,
-  RocketDuoToneWhite,
-  SettingsDuoToneWhite,
-} from "@/icons";
-import { v4 as uuid } from "uuid";
+
 import { Link } from "next-view-transitions";
 import { cn } from "@/lib/utils";
 import useSidebar from "@/hooks/use-sidebar";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { SidebarMenu } from "@/config/sidebar";
 
-type FieldProps = {
-  label: string;
-  id: string;
-};
 
-type SidebarProps = {
-  icon: React.ReactNode;
-} & FieldProps;
-
-export const SidebarMenu: SidebarProps[] = [
-  {
-    id: uuid(),
-    label: "home",
-    icon: <HomeDuoToneWhite />,
-  },
-  {
-    id: uuid(),
-    label: "automations",
-    icon: <AutomationDuoToneWhite />,
-  },
-  {
-    id: uuid(),
-    label: "integrations",
-    icon: <RocketDuoToneWhite />,
-  },
-  {
-    id: uuid(),
-    label: "settings",
-    icon: <SettingsDuoToneWhite />,
-  },
-];
 
 interface Props {
   page: string;
   slug: string;
+  onItemClick?: () => void;
 }
 
-const Itmes: React.FC<Props> = ({ page, slug }) => { 
+const Itmes: React.FC<Props> = ({ page, slug ,onItemClick}) => { 
   const {isSidebarOpen} = useSidebar(); 
   return SidebarMenu.map((item) => (
     <Link
@@ -59,6 +25,7 @@ const Itmes: React.FC<Props> = ({ page, slug }) => {
         page === slug && item.label === 'home' ? 'bg-main2' : 'text-[#9B9CA0]',
         isSidebarOpen ? "rounded-full gap-x-2 p-3" : "rounded-xl size-full py-3 justify-center +",
       )}
+      onClick={onItemClick}
     > 
     {isSidebarOpen ? (
       <>

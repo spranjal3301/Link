@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Logo from "../global/logo";
-import { Navbar } from "@/components/global/navbar";
-import { Modalbtn } from "@/components/global/loginBtn";
+import { Navbar } from "@/components/global/Landing/navbar";
+import { Modalbtn } from "@/components/global/Landing/loginBtn";
 
 
 interface Props {}

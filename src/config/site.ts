@@ -1,5 +1,7 @@
+
+
 export const siteConfig = {
-  name: "LiNk ?",
+  name: "Link ?",
   url: "#",
   ogImage: "#",
   description: "Automate DMs and comments on instagram",
@@ -100,6 +102,7 @@ export const productPrices = [
   },
 ];
 
-export const BLUR_FADE_DELAY = 0.04;
+
+
 
 export type SiteConfig = typeof siteConfig;

@@ -1,13 +1,9 @@
-import { NextPage } from 'next'
+import { NextPage } from "next";
 
 interface Props {}
 
 const Page: NextPage<Props> = ({}) => {
-  
-  return <div>
-    rga
+  return <div>Home page</div>;
+};
 
-  </div>
-}
-
-export default Page
+export default Page;
