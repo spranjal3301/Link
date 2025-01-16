@@ -22,7 +22,7 @@ model User {
   lastname     String?        @unique
   createdAt    DateTime       @default(now())
   subscription Subscription?
-  integrations Integrations[]
+  integrations Integrations[]   //- user -> [Instagram,whatsapp,X,LinkedIn]
   automations  Automation[]
 }
 
@@ -42,7 +42,7 @@ model Integrations {
   createdAt   DateTime     @default(now())
   token       String       @unique
   expiresAt   DateTime?
-  platformId String?      @unique     //~ instagramId
+  platformId  String?      @unique     //~ instagramId
   userId      String?      @db.Uuid
   User        User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
