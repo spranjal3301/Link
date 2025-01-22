@@ -9,7 +9,7 @@ import HeroVideoDialog from "../ui/hero-video-dialog";
 import GetStartedBtn from "../global/Landing/get-started-btn";
 
 
-export default async function Hero() {
+export default function Hero() {
   return (
     <section id="hero">
       <div className="relative overflow-hidden py-5 md:py-14 ">

@@ -7,7 +7,7 @@ import { Check } from 'lucide-react'
 interface Props {}
 
 const Page: NextPage<Props> = ({}) => {
-  //-WIP: connect automations
+  //-Done: connect automations
   return (
     <div className="grid grid-cols-1 lg:grid-cols-6 gap-5">
       <div className="lg:col-span-4">

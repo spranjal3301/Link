@@ -1,57 +1,62 @@
 "use server";
 
-import prisma from "@/lib/prisma";
-import { refreshToken } from "@/lib/refresh-token";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { createUser, findUser } from "./queries";
+import { updateInstagramSession } from "../integrations";
 
 export const getUser = async () => {
   const user = await currentUser();
-  if (!user) return redirect("/sign-in");
+  if (!user)
+    return redirect(process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL ?? "/sign-in");
 
   return user;
 };
-
-export const findUser = async (clerkId:string) => {
-  return await prisma.user.findUnique({
-    where:{
-      clerkId
-    },
-    include:{
-      subscription:true,
-      integrations:{
-        select:{
-          id:true,
-          token:true,
-          expiresAt:true,
-          name:true
-        }
-      }
-    }
-  })
-}
-
 
 export const onBoardUser = async () => {
   const clerkUser = await getUser();
   try {
     const user = await findUser(clerkUser.id);
-    if(user){
-      if(user.integrations.length > 0){ 
-        //- assumption : Only Instagram integrations is there (integrations[0].name = Instagram)
-        const today = new Date();
-        const time_left = user.integrations[0]?.expiresAt?.getTime()! - today.getTime();
-        const days = Math.round(time_left/(1000*3600*24)); //? milliSec to Days
+    if (user) {
+      updateInstagramSession(user);
 
-        if(days < 5){
-          console.log('refresh');
-
-          const refresh = refreshToken(user.integrations[0].token);
-          
-        }
-      }
+      return {
+        status: 200,
+        data: {
+          firstname: user.firstname,
+          lastname: user.lastname,
+        },
+      };
     }
+
+    const newUser = await createUser(
+      clerkUser.id,
+      clerkUser.firstName!,
+      clerkUser.lastName!,
+      clerkUser.emailAddresses[0].emailAddress
+    );
+
+    return {
+      status: 201,
+      data: newUser,
+    };
   } catch (error) {
-    
+    console.log("error in onBoard user", error);
+    return {
+      status: 500,
+      error,
+    };
+  }
+};
+
+export const getUserInfo = async () => {
+  const clerkUser = await getUser();
+  try {
+    const profile = await findUser(clerkUser.id);
+    if (profile) return { status: 200, data: profile };
+
+    return { status: 404 };
+  } catch (error) { 
+    return { status: 500, error };
   }
 };

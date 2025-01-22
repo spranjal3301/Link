@@ -4,6 +4,9 @@ import { Modal } from "../ui/animated-modal";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { ViewTransitions } from "next-view-transitions";
+import QueryProviders from "./query-provider";
+import { Toaster } from "@/components/ui/sonner";
+import ReduxProvider from "./redux-provider";
 
 interface Props {
   children: React.ReactNode;
@@ -18,7 +21,12 @@ const ChildProviders: React.FC<Props> = ({ children }) => {
         enableSystem
         disableTransitionOnChange
       >
-        <Modal>{children}</Modal>
+        <ReduxProvider>
+          <QueryProviders>
+            <Modal>{children}</Modal>
+            <Toaster />
+          </QueryProviders>
+        </ReduxProvider>
       </ThemeProvider>
     </div>
   );
