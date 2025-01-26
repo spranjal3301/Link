@@ -1,4 +1,4 @@
-import Billing from '@/components/global/billing'
+import Billing from '@/components/global/payments/billing'
 import { NextPage } from 'next'
 
 interface Props {}

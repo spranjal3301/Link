@@ -1,14 +1,27 @@
 import {
+  activateAutomation,
   createAutomation,
+  deleteKeyword,
+  saveKeyword,
+  saveListener,
+  savePosts,
+  saveTrigger,
   updateAutomationName,
 } from "@/actions/automations/automations";
 import { getQueryClient } from "@/lib/query-client";
 import {
+  activateAutomationKey,
+  addKeywordKey,
+  addTriggerKey,
   createAutomationKey,
+  createListenerKey,
+  deleteKeywordKey,
   getAllAutomationsKey,
   getAutomationInfoKey,
+  savePostKey,
   updateAutomationKey,
 } from "@/tanstack-query/query-keys";
+import { Tlistener, Tpost, Ttrigger } from "@/types";
 import {
   MutationFunction,
   useMutation,
@@ -16,8 +29,13 @@ import {
 } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
+import { useZodForm } from "./use-zod-from";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { TRIGGER } from "@/redux/reducer/automation";
 
 //` Helper hooks
+//- for mutation
 export const useMutationData = (
   mutationKey: string,
   mutationFn: MutationFunction<any, any>,
@@ -46,6 +64,7 @@ export const useMutationData = (
   });
 };
 
+//- for Optimitic UI (update catch)
 export const useMutationDataState = (mutationKey: string) => {
   const data = useMutationState({
     filters: { mutationKey: [mutationKey] },
@@ -94,7 +113,7 @@ export const useEditAutomation = (automationId: string) => {
       } else {
         disableEdit();
         //? UI Update
-        toast('Invaild',{description:'Automation Name can`t be Empty'})
+        toast("Invaild", { description: "Automation Name can`t be Empty" });
       }
     }
   };
@@ -107,4 +126,128 @@ export const useEditAutomation = (automationId: string) => {
     isPending,
     OnblurUpdateAutomationName,
   };
+};
+
+export const useListener = (automationId: string) => {
+  const [listener, setListener] = useState<Tlistener>("MESSAGE");
+
+  const promptSchema = z.object({
+    prompt: z.string().min(1),
+    reply: z.string(),
+  });
+
+  const { isPending, mutate } = useMutationData(
+    createListenerKey,
+    (data: { prompt: string; reply: string }) =>
+      saveListener(automationId, listener, data.prompt, data.reply),
+    getAutomationInfoKey
+  );
+
+  const { register, errors, onFormSubmit, watch, reset } = useZodForm(
+    promptSchema,
+    mutate
+  );
+
+  const onSetListener = (type: Tlistener) => setListener(type);
+
+  return {
+    register,
+    errors,
+    onFormSubmit,
+    watch,
+    reset,
+    listener,
+    onSetListener,
+    isPending,
+  };
+};
+
+export const useTriggers = (automationId: string) => {
+  //* client Side state access
+  const types = useAppSelector(
+    (state) => state.AutmationReducer.trigger?.types
+  );
+  const dispatch = useAppDispatch();
+
+  //* client Side state update
+  const onSetTrigger = (type: Ttrigger) =>
+    dispatch(TRIGGER({ trigger: { type } }));
+
+  //* saving client side state into server/db
+  const { mutate, isPending } = useMutationData(
+    addTriggerKey,
+    (data: { types: string[] }) => saveTrigger(automationId, data.types),
+    getAutomationInfoKey
+  );
+
+  const onSaveTrigger = () => mutate({ types });
+
+  return {
+    types,
+    onSetTrigger,
+    onSaveTrigger,
+    isPending,
+  };
+};
+
+export const useKeywords = (automationId: string) => {
+  const [keyword, setKeyword] = useState("");
+
+  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setKeyword(e.target.value);
+
+  const { mutate, isPending } = useMutationData(
+    addKeywordKey,
+    (data: { keyword: string }) => saveKeyword(automationId, data.keyword),
+    getAutomationInfoKey,
+    () => setKeyword("")
+  );
+
+  const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      mutate({ keyword });
+      setKeyword("");
+    }
+  };
+
+  const { mutate: deleteMutation, isPending: isDeleted } = useMutationData(
+    deleteKeywordKey,
+    (data: { id: string }) => deleteKeyword(data.id),
+    getAutomationInfoKey
+  );
+
+  const onDeletekeyword = (id: string) => deleteMutation({ id });
+
+  return { keyword, onValueChange, onKeyPress, onDeletekeyword, isDeleted };
+};
+
+export const useAutomationPosts = (automationId: string) => {
+  const [posts, setPosts] = useState<Tpost[]>([]);
+
+  //-toggle post selete
+  const onSelectPost = (post: Tpost) => {
+    setPosts((prevPost) => {
+      if (prevPost.find((p) => p.postid === post.postid)) {
+        return prevPost.filter((p) => p.postid !== post.postid);
+      }
+      return [...prevPost, post];
+    });
+  };
+
+  const { mutate, isPending } = useMutationData(
+    savePostKey,
+    () => savePosts(automationId, posts),
+    getAutomationInfoKey,
+    () => setPosts([])
+  );
+
+  return { posts, onSelectPost, mutate, isPending };
+};
+
+export const useActivateAutomation = (automationId: string) => {
+  return useMutationData(
+    activateAutomationKey,
+    (data: { state: boolean }) => activateAutomation(automationId, data.state),
+    getAutomationInfoKey
+  );
 };

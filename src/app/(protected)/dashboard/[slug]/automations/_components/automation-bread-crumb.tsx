@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { PencilDuoToneBlack } from "@/icons";
 import { ChevronRight, PencilIcon } from "lucide-react";
 import React from "react";
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const AutomationBreadCrumb = ({ id }: Props) => {
-  //-WIP: get automation data and create editable bread crumb
+  //-Done: get automation data and create editable bread crumb
   const { data } = useQueryAutomationInfo(id);
   const { edit, enableEdit, inputRef, isPending, OnblurUpdateAutomationName } =
     useEditAutomation(id);
@@ -66,7 +66,7 @@ const AutomationBreadCrumb = ({ id }: Props) => {
           </p>
         </div>
       </div>
-      <ActivateAutomationButton />
+      <ActivateAutomationButton id={id} />
     </div>
   );
 };

@@ -1,27 +1,21 @@
-"use client"
-import React, { useState } from 'react';
-import { Loader, Check, CheckCircle } from 'lucide-react';
-import { Switch } from '@/components/ui/switch';
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { AnimatePresence ,motion} from 'framer-motion';
-import { productPrices } from '@/config/site';
+"use client";
+import React, { useState } from "react";
+import { Loader, Check, CheckCircle } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { productPrices } from "@/config/site";
 
-const toHumanPrice = (price:any, decimals = 2) => {
+const toHumanPrice = (price: any, decimals = 2) => {
   return (price / 100).toFixed(decimals);
 };
 
-
-
-
-
 const PricingSection = () => {
-  const [interval, setInterval] = useState('month');
+  const [interval, setInterval] = useState("month");
   const [isLoading, setIsLoading] = useState(false);
-  const [activeIndex, setActiveIndex] = useState('');
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState("");
 
-  const onSubscribeClick = async (priceId:string) => {
+  const onSubscribeClick = async (priceId: string) => {
     setActiveIndex(priceId);
     setIsLoading(true);
     // Simulate API call
@@ -38,19 +32,22 @@ const PricingSection = () => {
             Pricing
           </h4>
           <h2 className="text-5xl font-bold tracking-tight text-black dark:text-white sm:text-6xl">
-            Simple <span className='theme-gradient'>pricing</span> for everyone.
+            Simple <span className="theme-gradient">pricing</span> for everyone.
           </h2>
           <p className="hidden md:inline mt-4 text-xl leading-8 text-black/80 dark:text-white/70">
-            Choose an <strong>affordable plan</strong> that's packed with the best features for 
-            engaging your audience, creating customer loyalty, and driving sales.
+            Choose an <strong>affordable plan</strong> that's packed with the
+            best features for engaging your audience, creating customer loyalty,
+            and driving sales.
           </p>
         </div>
 
         {/*//- Toggle  */}
         <div className="mt-6 flex w-full items-center justify-center space-x-2">
-          <Switch 
-            checked={interval === 'year'}
-            onCheckedChange={(checked) => setInterval(checked ? 'year' : 'month')}
+          <Switch
+            checked={interval === "year"}
+            onCheckedChange={(checked) =>
+              setInterval(checked ? "year" : "month")
+            }
             id="interval"
           />
           <span>Annual</span>
@@ -60,38 +57,20 @@ const PricingSection = () => {
         </div>
 
         <div className="flex w-full flex-wrap justify-center gap-4 ">
-          {productPrices.map((price,idx) => (
+          {productPrices.map((price, idx) => (
             <div
               key={price.id}
               className={cn(
-                'flex md:w-[40%] max-w-[95%] flex-col gap-8 rounded-2xl border p-4 ',
-                price.isMostPopular ? 'border-2 border-main1 ' : "" ,
+                "flex md:w-[40%] max-w-[95%] flex-col gap-8 rounded-2xl border p-4 ",
+                price.isMostPopular ? "border-2 border-main1 " : "",
                 "relative group "
               )}
-              onMouseEnter={() => setHoveredIndex(idx)}
-              onMouseLeave={() => setHoveredIndex(null)}
             >
-             <AnimatePresence>
-            {hoveredIndex === idx && (
-              <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-main1/20 block  rounded-3xl"
-                layoutId="hoverBackground"
-                initial={{ opacity: 0 }}
-                animate={{
-                  opacity: 1,
-                  transition: { duration: 0.15 },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.15, delay: 0.2 },
-                }}
-              />
-            )}
-          </AnimatePresence>
-
               <div className="flex items-center flex-wrap">
                 <div className="ml-4">
-                  <h2 className="text-base font-semibold leading-7">{price.name}</h2>
+                  <h2 className="text-base font-semibold leading-7">
+                    {price.name}
+                  </h2>
                   <p className="h-12 text-sm leading-5 text-black/70 dark:text-white">
                     {price.description}
                   </p>
@@ -100,15 +79,21 @@ const PricingSection = () => {
 
               <div className="flex flex-row gap-1  ">
                 <span className="text-4xl font-bold text-black dark:text-white">
-                ₹{toHumanPrice(interval === 'month' ? price.monthlyPrice : price.yearlyPrice, 0)}
+                  ₹
+                  {toHumanPrice(
+                    interval === "month"
+                      ? price.monthlyPrice
+                      : price.yearlyPrice,
+                    0
+                  )}
                   <span className="text-xs"> / {interval}</span>
                 </span>
               </div>
 
               <Button
                 className={cn(
-                  'group relative w-full gap-2 overflow-hidden text-lg font-semibold tracking-tighter',
-                  'transform-gpu ring-offset-current transition-all duration-300 ease-out hover:ring-2 hover:ring-primary hover:ring-offset-2'
+                  "group relative w-full gap-2 overflow-hidden text-lg font-semibold tracking-tighter",
+                  "transform-gpu ring-offset-current transition-all duration-300 ease-out hover:ring-2 hover:ring-primary hover:ring-offset-2"
                 )}
                 disabled={isLoading}
                 onClick={() => onSubscribeClick(price.id)}
@@ -147,8 +132,5 @@ const PricingSection = () => {
     </section>
   );
 };
-
-
-
 
 export default PricingSection;

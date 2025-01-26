@@ -199,7 +199,7 @@ const config = {
           "background-position-spin 3000ms infinite alternate",
         marquee: "marquee var(--duration) infinite linear",
         "marquee-vertical": "marquee-vertical var(--duration) linear infinite",
-		'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
+		    'star-movement-bottom': 'star-movement-bottom linear infinite alternate',
         'star-movement-top': 'star-movement-top linear infinite alternate',
       },
       themeGradient: {

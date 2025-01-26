@@ -1,9 +1,10 @@
 import { duplicateValidation } from "@/lib/utils";
+import { Ttrigger } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type IntialStateTriggerProps = {
   trigger?: {
-    type?: "COMMENT" | "DM";
+    type?: Ttrigger;
     keyword?: string;
     types?: string[];
     keywords?: string[];

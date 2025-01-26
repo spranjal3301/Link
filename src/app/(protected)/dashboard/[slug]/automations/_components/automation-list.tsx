@@ -8,6 +8,7 @@ import { useQueryAutomations } from "@/hooks/use-query";
 import { cn, getMonth } from "@/lib/utils";
 import { createAutomationKey } from "@/tanstack-query/query-keys";
 import { Link } from "next-view-transitions";
+import { notFound } from "next/navigation";
 import React, { useMemo } from "react";
 
 type Props = {};
@@ -19,9 +20,26 @@ const AutomationList = (props: Props) => {
   const { pathNames } = usePaths();
   const { data: AllAutomation } = useQueryAutomations();
 
-  const {latestData} = useMutationDataState(createAutomationKey)
-  
-  if (!AllAutomation?.success || AllAutomation.data?.length == 0) {
+  const { latestData } = useMutationDataState(createAutomationKey);
+
+  if (!AllAutomation?.success) {
+    return notFound();
+  }
+
+  const optimisticUiData = useMemo(() => {
+    if (
+      latestData &&
+      latestData?.variables &&
+      AllAutomation &&
+      AllAutomation.data
+    ) {
+      const data = [latestData.variables, ...AllAutomation.data];
+      return { data };
+    }
+    return AllAutomation || { data: [] };
+  }, [latestData, AllAutomation]);
+
+  if (optimisticUiData?.data?.length == 0) {
     return (
       <div className="h-[70vh] flex justify-center items-center flex-col gap-y-3">
         <h3 className="text-lg text-gray-400">No Automations </h3>
@@ -30,21 +48,10 @@ const AutomationList = (props: Props) => {
     );
   }
 
-  const optimisticUiData = useMemo(() => {
-    if ((latestData && latestData?.variables &&  AllAutomation && AllAutomation.data)) {
-      const test = [latestData.variables,...AllAutomation.data];
-      return { data: test }
-    }
-    return AllAutomation || { data: [] }
-  }, [latestData, AllAutomation]);
-
-  // console.log(optimisticUiData);
-  
-
   return (
     <div className="flex flex-col gap-y-3">
       {optimisticUiData.data!.map(
-        ({ id, name, keywords, createdAt, listener }:any) => (
+        ({ id, name, keywords, createdAt, listener }: any) => (
           <Link
             href={`${pathNames}/${id}`}
             key={id}

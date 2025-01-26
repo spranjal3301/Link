@@ -5,7 +5,7 @@ import Itmes from "./sidebar-itmes";
 import { Separator } from "../../ui/separator";
 import { HelpDuoToneWhite } from "@/icons";
 import ClerkAuthState from "./clerk-auth-state";
-import SubscriptionPlane, { UpgradeCard } from "@/components/global/dashboard-layout/subscription";
+import SubscriptionPlan, { UpgradeCard } from "@/components/global/dashboard-layout/subscription";
 import SidebarToggle from './sidebar-toggle';
 import useSidebar from '@/hooks/use-sidebar';
 import { cn } from '@/lib/utils';
@@ -80,7 +80,7 @@ const SidebarContent: NextPage<Props> = ({page ,slug,onItemClick}) => {
         </div>
 
 
-        <SubscriptionPlane >
+        <SubscriptionPlan >
           <div
             className={cn("hidden md:flex flex-1 flex-col justify-end ",
               isSidebarOpen ? "" : "md:hidden" ,
@@ -88,7 +88,7 @@ const SidebarContent: NextPage<Props> = ({page ,slug,onItemClick}) => {
          >
             <UpgradeCard/>
           </div>
-        </SubscriptionPlane> 
+        </SubscriptionPlan> 
 
 
       </div>

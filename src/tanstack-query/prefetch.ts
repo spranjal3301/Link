@@ -10,6 +10,8 @@ import {
   getUserInfoKey,
 } from "./query-keys";
 
+//- this is server side catching
+
 export const prefetch = async (
   client: QueryClient,
   action: QueryFunction,
