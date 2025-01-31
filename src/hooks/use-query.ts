@@ -14,6 +14,13 @@ import { useQuery } from "@tanstack/react-query";
 
 //` All Get Querys
 
+export const useQueryUser = () => {
+  return useQuery({
+    queryKey: [getUserInfoKey],
+    queryFn: getUserInfo,
+  });
+};
+
 export const useQueryAutomations = () => {
   return useQuery({
     queryKey: [getAllAutomationsKey],
@@ -28,17 +35,10 @@ export const useQueryAutomationInfo = (automationId: string) => {
   });
 };
 
-export const useQueryUser = () => {
-  return useQuery({
-    queryKey:[getUserInfoKey],
-    queryFn:getUserInfo
-  })
-}
-
 export const useQueryGetProfilePosts = () => {
   const fetchPosts = async () => await getProfilePosts();
   return useQuery({
-    queryKey:[getInstagramMediaKey],
-    queryFn:fetchPosts 
-  })
-}
+    queryKey: [getInstagramMediaKey],
+    queryFn: fetchPosts,
+  });
+};

@@ -18,8 +18,8 @@ model User {
   clerkId      String         @unique
   email        String?        @unique
   phone        String?        @unique  //~ change
-  firstname    String?        @unique
-  lastname     String?        @unique
+  firstname    String?        
+  lastname     String?        
   createdAt    DateTime       @default(now())
   subscription Subscription?
   integrations Integrations[]   //- user -> [Instagram,whatsapp,X,LinkedIn]
@@ -31,7 +31,7 @@ model Subscription {
   plan       SUBSCRIPTION_PLAN @default(FREE)
   createdAt  DateTime          @default(now())
   updatedAt  DateTime          @default(now())
-  customerId String?           @unique
+  paymentId  String?           @unique
   UserId     String            @unique @db.Uuid
   User       User?             @relation(fields: [UserId], references: [id], onDelete: Cascade)
 }

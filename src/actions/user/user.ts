@@ -14,13 +14,13 @@ export const getUser = async () => {
   return user;
 };
 
-export const onBoardUser = async () => {
+export const onBoardUser = async () => {    
   const clerkUser = await getUser();
   try {
     const user = await findUser(clerkUser.id);
-    if (user) {
-      updateInstagramSession(user);
 
+    if (user) {
+      await updateInstagramSession(user);
       return {
         status: 200,
         data: {
@@ -61,3 +61,5 @@ export const getUserInfo = async () => {
     return { status: 500, error };
   }
 };
+
+

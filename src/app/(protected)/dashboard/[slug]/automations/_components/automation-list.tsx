@@ -19,27 +19,23 @@ const AutomationList = (props: Props) => {
   //- UI update
   const { pathNames } = usePaths();
   const { data: AllAutomation } = useQueryAutomations();
-
   const { latestData } = useMutationDataState(createAutomationKey);
-
-  if (!AllAutomation?.success) {
-    return notFound();
-  }
+  
 
   const optimisticUiData = useMemo(() => {
-    if (
-      latestData &&
-      latestData?.variables &&
-      AllAutomation &&
-      AllAutomation.data
-    ) {
-      const data = [latestData.variables, ...AllAutomation.data];
-      return { data };
+    if (!AllAutomation?.success) {
+      return { data: [] };
     }
+  
+    if (latestData?.variables && AllAutomation?.data) {
+      return { data: [latestData.variables, ...AllAutomation.data] };
+    }
+  
     return AllAutomation || { data: [] };
   }, [latestData, AllAutomation]);
+  
 
-  if (optimisticUiData?.data?.length == 0) {
+  if (optimisticUiData?.data?.length === 0) {
     return (
       <div className="h-[70vh] flex justify-center items-center flex-col gap-y-3">
         <h3 className="text-lg text-gray-400">No Automations </h3>

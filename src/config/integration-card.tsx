@@ -1,4 +1,5 @@
 import { InstagramDuoToneBlue, SalesForceDuoToneBlue } from "@/icons"
+import { TintegrationStrategy } from "@/types"
 
 export type TintegrationCard = {
   title: string
@@ -7,10 +8,7 @@ export type TintegrationCard = {
   strategy:TintegrationStrategy
 }
 
-export enum TintegrationStrategy {
-  'INSTAGRAM',
-  'CRM'
-}
+
 
 export const INTEGRATION_CARDS_DATA:TintegrationCard[] = [
   {
@@ -18,13 +16,13 @@ export const INTEGRATION_CARDS_DATA:TintegrationCard[] = [
     description:
       "Lorem ipsum dolor sit amet consectetur. Mauris scelerisque tincidunt ultrices",
     icon: <InstagramDuoToneBlue />,
-    strategy: TintegrationStrategy.INSTAGRAM,
+    strategy: 'INSTAGRAM',
   },
   {
     title: "Connect Salesforce",
     description:
       "Lorem ipsum dolor sit amet consectetur. Mauris scelerisque tincidunt ultrices",
     icon: <SalesForceDuoToneBlue />,
-    strategy: TintegrationStrategy.CRM,
+    strategy: 'CRM',
   },
 ];

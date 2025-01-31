@@ -16,7 +16,7 @@ export type FindUserType = {
     plan: "FREE" | "PRO";
     createdAt: Date;
     updatedAt: Date;
-    customerId: string | null;
+    paymentId: string | null;
     UserId: string;
   } | null;
   integrations: {
@@ -68,3 +68,25 @@ export const createUser = async (
     }
   })
 };
+
+export const updateSubscriptionQuerie = async (
+  clerkId: string,
+  plan: 'PRO' | 'FREE',
+  paymentId?:string
+) => {
+  return await db.user.update({
+    where: {
+      clerkId,
+    },
+    data: {
+      subscription: {
+        update: {
+          data: {
+            plan,
+            paymentId,
+          },
+        },
+      },
+    },
+  })
+}

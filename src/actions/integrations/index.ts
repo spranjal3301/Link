@@ -3,8 +3,8 @@
 import { FindUserType } from "../user/queries";
 import { refreshToken } from "@/lib/refresh-token";
 import { updateIntegration } from "./queries";
-
-
+import { TintegrationStrategy } from "@/types";
+import { redirect } from "next/navigation";
 
 export const updateInstagramSession = async (user: FindUserType) => {
   if (user.integrations.length > 0) {
@@ -34,5 +34,11 @@ export const updateInstagramSession = async (user: FindUserType) => {
         console.log("update sessions failed");
       }
     }
+  }
+};
+
+export const onIntegrationOauth = async (strategy: TintegrationStrategy) => {
+  if(strategy=='INSTAGRAM'){
+    return redirect(process.env.INSTAGRAM_EMBEDDED_OAUTH_URL as string);
   }
 };

@@ -7,6 +7,7 @@ import { ViewTransitions } from "next-view-transitions";
 import QueryProviders from "./query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import ReduxProvider from "./redux-provider";
+import Script from "next/script";
 
 interface Props {
   children: React.ReactNode;
@@ -23,6 +24,7 @@ const ChildProviders: React.FC<Props> = ({ children }) => {
       >
         <ReduxProvider>
           <QueryProviders>
+           <Script src="https://checkout.razorpay.com/v1/checkout.js" />
             <Modal>{children}</Modal>
             <Toaster />
           </QueryProviders>
