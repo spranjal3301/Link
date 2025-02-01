@@ -14,6 +14,10 @@ const nextConfig = {
             protocol: 'https',
             hostname:"scontent-iad3-2.cdninstagram.com"
           },
+          {
+            protocol: 'https',
+            hostname:"startup-template-sage.vercel.app"
+          },
         ],
       },
 };
