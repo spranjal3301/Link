@@ -49,7 +49,7 @@ export const useMutationData = (
     onSuccess: (data) => {
       if (onSuccess) onSuccess();
       //-UI update
-      toast(data?.success ? "Success" : "Error", {
+      toast(data?.success || data?.status==200 ? "Success" : "Error", {
         description: data.message,
         action: {
           label: "Undo",

@@ -169,6 +169,7 @@ export async function POST(req: NextRequest) {
                 webhook_payload.entry[0].changes[0].value.from.id
               );
 
+              //! change
               const direct_message = await sendPrivateMessage(
                 webhook_payload.entry[0].id,
                 webhook_payload.entry[0].changes[0].value.id,
@@ -217,6 +218,7 @@ export async function POST(req: NextRequest) {
 
                 await db.$transaction([reciever, sender]);
 
+                //! change
                 const direct_message = await sendPrivateMessage(
                   webhook_payload.entry[0].id,
                   webhook_payload.entry[0].changes[0].value.id,
@@ -302,12 +304,12 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      return NextResponse.json({message: 'No automation set',},{ status: 404 }
+      return NextResponse.json({message: 'No automation set',},{ status: 200 }
       )
     }
 
-    return NextResponse.json({ message: "No automation set" }, { status: 404 });
+    return NextResponse.json({ message: "No automation set" }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "No automation set" }, { status: 500 });
+    return NextResponse.json({ message: "No automation set" }, { status: 200 });
   }
 }

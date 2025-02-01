@@ -11,7 +11,7 @@ const Page: NextPage<Props> = async ({}) => {
   
   
   if(user.status===200 || user.status===201){
-    const url = `dashboard/${user.data?.firstname}${user.data?.lastname}`;
+    const url = `dashboard/${user.data?.firstname ? user.data?.firstname : user.data?.lastname}`;
     return redirect(url);
   }
   

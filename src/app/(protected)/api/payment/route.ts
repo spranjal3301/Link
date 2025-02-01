@@ -56,7 +56,4 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// clientId
-// priceId
-// success_url: `${process.env.NEXT_PUBLIC_HOST_URL}/payment?session_id={CHECKOUT_SESSION_ID}`,
-// cancel_url: `${process.env.NEXT_PUBLIC_HOST_URL}/payment?cancel=true`,
+

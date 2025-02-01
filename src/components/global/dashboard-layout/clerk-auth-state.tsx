@@ -7,7 +7,6 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { User } from "lucide-react";
-import Loader from "./loader";
 import { Button } from "@/components/ui/button";
 
 type Props = {};

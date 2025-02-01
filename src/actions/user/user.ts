@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { createUser, findUser } from "./queries";
 import { updateInstagramSession } from "../integrations";
 
+
 //-Auth middleware
 export const getUser = async () => {
   const user = await currentUser();

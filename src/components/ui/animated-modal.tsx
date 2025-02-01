@@ -64,7 +64,7 @@ export const ModalTrigger = ({
 
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, []);
+  }, [actionButton, setOpen]);
 
   return (
     <Button variant={"secondary"} className={cn(""

@@ -43,10 +43,13 @@ const Footer: NextPage<Props> = ({}) => {
             </div>
             <div className="grid grid-cols-3 gap-10 items-start mt-10 md:mt-0">
               {footer.map(({ title, itmes }) => (
-                <div className="flex justify-center space-y-4 flex-col mt-4 relative z-10">
+                <div
+                key={title} 
+                className="flex justify-center space-y-4 flex-col mt-4 relative z-10">
                   <span className="text-white">{title}</span>
                   {itmes.map(({ name, herf }) => (
                     <a
+                      key={name} 
                       className="transition-colors text-muted-dark hover:text-neutral-400 text-xs sm:text-sm"
                       href={herf}
                     >

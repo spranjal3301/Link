@@ -35,7 +35,7 @@ const PricingSection = () => {
             Simple <span className="theme-gradient">pricing</span> for everyone.
           </h2>
           <p className="hidden md:inline mt-4 text-xl leading-8 text-black/80 dark:text-white/70">
-            Choose an <strong>affordable plan</strong> that's packed with the
+            Choose an <strong>affordable plan</strong> that&apos;s packed with the
             best features for engaging your audience, creating customer loyalty,
             and driving sales.
           </p>

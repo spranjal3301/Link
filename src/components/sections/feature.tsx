@@ -117,7 +117,7 @@ const Feature: NextPage<Props> = ({}) => {
     <div className="mx-auto flex max-w-screen-xl flex-col gap-8 px-4 md:px-8 py-10  md:py-28">
       <div className="mx-auto max-w-5xl text-center flex flex-col lg:flex-row items-center lg:items-end gap-3">
         <h2 className="text-3xl font-semibold tracking-tight text-black dark:text-white sm:text-4xl">
-          What's in <span className="theme-gradient">LINK?</span>
+          What&apos;s in <span className="theme-gradient">LINK?</span>
         </h2>
         <div className="text-xl leading-8 text-black/80 dark:text-white/70">
           <ShinyText
