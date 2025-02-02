@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
         );
 
         //* If User set any trigger("DIRECT MESSAGE" | "SMART AI")
-        if (automation && automation.trigger) {
+        if (automation && automation?.trigger) {
           //* if DIRECT MESSAGE(DM)
           if (
             automation.listener &&
@@ -253,8 +253,13 @@ export async function POST(req: NextRequest) {
         webhook_payload.entry[0].messaging[0].sender.id
       )
 
+    
+
       if (customer_history.history.length > 0) {
-        const automation = await findAutomation(customer_history.automationId!)
+        if(!customer_history.automationId){
+          return NextResponse.json({message: 'No automation set',},{ status: 200 })
+        }
+        const automation = await findAutomation(customer_history.automationId)
 
         //*If listener is SMARTAI and USER have PRO
         if (
