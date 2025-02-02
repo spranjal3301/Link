@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  return NextResponse.json({ message: "No automation set" }, { status: 200 });
+  
   const webhook_payload = await req.json();
   let matcher;
   try {
