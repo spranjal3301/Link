@@ -584,7 +584,7 @@ const Page: NextPage<Props> = ({}) => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3 text-gray-300">
                   <Mail className="w-5 h-5 text-indigo-400" />
-                  <span>spranjsl394@gmail.com</span>
+                  <span>spranjal394@gmail.com</span>
                 </div>
                 <div className="flex items-center space-x-3 text-gray-300">
                   <Phone className="w-5 h-5 text-indigo-400" />
