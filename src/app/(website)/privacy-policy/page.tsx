@@ -64,14 +64,14 @@ const Page: NextPage<Props> = ({}) => {
                     <p>
                       <strong>Affiliate</strong> means an entity that controls,
                       is controlled by or is under common control with a party,
-                      where "control" means ownership of 50% or more of the
+                      where control means ownership of 50% or more of the
                       shares, equity interest or other securities entitled to
                       vote for election of directors or other managing
                       authority.
                     </p>
                     <p>
-                      <strong>Company</strong> (referred to as either "the
-                      Company", "We", "Us" or "Our" in this Agreement) refers to
+                      <strong>Company</strong> (referred to as either the
+                      Company, We, Us or Our in this Agreement) refers to
                       link.
                     </p>
                     <p>
@@ -169,7 +169,7 @@ const Page: NextPage<Props> = ({}) => {
                   <p className="text-gray-300">
                     Usage Data is collected automatically when using the
                     Service. Usage Data may include information such as Your
-                    Device's Internet Protocol address (e.g. IP address),
+                    Device&apos;s Internet Protocol address (e.g. IP address),
                     browser type, browser version, the pages of our Service that
                     You visit, the time and date of Your visit, the time spent
                     on those pages, unique device identifiers and other
@@ -197,7 +197,7 @@ const Page: NextPage<Props> = ({}) => {
                     If You decide to register through or otherwise grant us
                     access to a Third-Party Social Media Service, We may collect
                     Personal data that is already associated with Your
-                    Third-Party Social Media Service's account, such as Your
+                    Third-Party Social Media Service&apos;s account, such as Your
                     name, Your email address, Your activities or Your contact
                     list associated with that account.
                   </p>
@@ -205,7 +205,7 @@ const Page: NextPage<Props> = ({}) => {
                   <p className="text-gray-300">
                     You may also have the option of sharing additional
                     information with the Company through Your Third-Party Social
-                    Media Service's account. If You choose to provide such
+                    Media Service&apos;s account. If You choose to provide such
                     information and Personal Data, during registration or
                     otherwise, You are giving the Company permission to use,
                     share, and store it in a manner consistent with this Privacy
@@ -232,7 +232,7 @@ const Page: NextPage<Props> = ({}) => {
                 </li>
               </ul>
               <p className="text-gray-300 my-4">
-                Cookies can be "Persistent" or "Session" Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser. You can learn more about cookies on TermsFeed website article.
+                Cookies can be Persistent or Session Cookies. Persistent Cookies remain on Your personal computer or mobile device when You go offline, while Session Cookies are deleted as soon as You close Your web browser. You can learn more about cookies on TermsFeed website article.
               </p>
               <p className="text-gray-300 mb-4">
                 We use both Session and Persistent Cookies for the purposes set out below:
@@ -298,7 +298,7 @@ const Page: NextPage<Props> = ({}) => {
                 <li>
                   To contact You: To contact You by email, telephone calls, SMS,
                   or other equivalent forms of electronic communication, such as
-                  a mobile application's push notifications regarding updates or
+                  a mobile application&apos;s push notifications regarding updates or
                   informative communications related to the functionalities,
                   products or contracted services, including the security
                   updates, when necessary or reasonable for their
@@ -409,7 +409,7 @@ const Page: NextPage<Props> = ({}) => {
               </h2>
               <p className="text-gray-300 mb-4">
                 Your information, including Personal Data, is processed at the
-                Company's operating offices and in any other places where the
+                Company&apos;s operating offices and in any other places where the
                 parties involved in the processing are located. It means that
                 this information may be transferred to — and maintained on —
                 computers located outside of Your state, province, country or
@@ -522,7 +522,7 @@ const Page: NextPage<Props> = ({}) => {
             {/* Children's Privacy */}
             <div className="bg-gray-800 rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
-                Children's Privacy
+                Children&apos;s Privacy
               </h2>
               <p className="text-gray-300">
                 Our Service does not address anyone under the age of 13. We do
@@ -541,7 +541,7 @@ const Page: NextPage<Props> = ({}) => {
               <p className="text-gray-300">
                 Our Service may contain links to other websites that are not
                 operated by Us. If You click on a third party link, You will be
-                directed to that third party's site. We strongly advise You to
+                directed to that third party&apos;s site. We strongly advise You to
                 review the Privacy Policy of every site You visit.
               </p>
               <p className="text-gray-300">
@@ -563,7 +563,7 @@ const Page: NextPage<Props> = ({}) => {
               <p className="text-gray-300">
                 We will let You know via email and/or a prominent notice on Our
                 Service, prior to the change becoming effective and update the
-                "Last updated" date at the top of this Privacy Policy.
+                Last updated date at the top of this Privacy Policy.
               </p>
               <p className="text-gray-300">
                 You are advised to review this Privacy Policy periodically for
