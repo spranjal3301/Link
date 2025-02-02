@@ -20,6 +20,7 @@ export const getKeywordAutomation = async (
   return await db.automation.findUnique({
     where: {
       id: automationId,
+      active:true, //?change
     },
 
     include: {
