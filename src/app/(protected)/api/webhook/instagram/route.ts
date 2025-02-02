@@ -23,22 +23,22 @@ export async function POST(req: NextRequest) {
   try {
     //` DM keyword Match
     if (webhook_payload.entry[0].messaging) {
-       console.log("DM keyword Match",webhook_payload.entry[0].messaging[0].message.text);
+       console.log("DM keyword Match",webhook_payload.entry[0].messaging[0]?.message?.text);
       matcher = await matchKeyword(
-        webhook_payload.entry[0].messaging[0].message.text
+        webhook_payload.entry[0].messaging[0].message?.text
       );
     }
 
     //` Comment keyword Matcher
     if (webhook_payload.entry[0].changes) {
-      console.log("Comment keyword Matcher",webhook_payload.entry[0].changes[0].value.text);
+      console.log("Comment keyword Matcher",webhook_payload.entry[0].changes[0].value?.text);
       matcher = await matchKeyword(
-        webhook_payload.entry[0].changes[0].value.text
+        webhook_payload.entry[0].changes[0]?.value?.text
       );
     }
 
     //- If keyword match found 
-    if (matcher && matcher.automationId) {
+    if (matcher && matcher?.automationId) {
       console.log("Matched");
       // We have a keyword matcher
 
