@@ -91,7 +91,9 @@ export async function POST(req: NextRequest) {
         }
 
         if (listener.listener === "SMARTAI" && isPro) {
+          console.log("SMARTAI is in action");
           const aiResponse = await createAIChatCompletion(listener.prompt!);
+          console.log("aiResponse",aiResponse);
           const aiContent = aiResponse.choices[0].message.content;
           
           console.log("aiContent",aiContent);
@@ -130,8 +132,9 @@ export async function POST(req: NextRequest) {
         message.sender.id
       );
 
-      if(!history?.automationId)return createResponse("this is reply message | automationId not found", 200);
-
+      if(!history || !history.history || !history?.automationId){
+        return createResponse("this is reply message | automationId not found", 200);
+      }
 
       if (history.history.length > 0) {
         const automation = await findAutomation(history.automationId!);
