@@ -3,11 +3,12 @@ import {
   createChatHistory,
   getChatHistory,
   getKeywordAutomation,
-  getKeywordPost,
   matchKeyword,
   trackResponses,
+  createChatTransaction,
+  getKeywordPost,
 } from "@/actions/instagram/queries";
-import { openai } from "@/lib/ai";
+import { openai, createAIChatCompletion } from "@/lib/ai";
 import { sendDM, sendPrivateMessage } from "@/lib/instagram-utils";
 import { db } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
@@ -18,315 +19,173 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const webhook_payload = await req.json();
-  let matcher;
   try {
-    console.log(webhook_payload);
-    
+    const webhookPayload = await req.json();
+    const [entry] = webhookPayload.entry; //- webhook_payload.entry[0]
+    const { messaging, changes } = entry;
 
-    //` DM keyword Match
-    if (webhook_payload.entry[0].messaging) {
-       console.log("DM keyword Match",webhook_payload.entry[0].messaging[0]?.message?.text);
-      matcher = await matchKeyword(
-        webhook_payload.entry[0].messaging[0].message?.text
+    const eventType = messaging
+      ? "message"
+      : changes?.[0]?.field === "comments"
+      ? "comment"
+      : null;
+    const userText = messaging?.[0]?.message?.text ?? changes?.[0]?.value?.text;
+
+    const matcher = userText ? await matchKeyword(userText) : null;
+
+    console.log("eventType",eventType);
+    console.log("userText",userText);
+
+    //` If keyword match exits for DM or Comments
+    if (matcher?.automationId) {
+      console.log("matched automationId", matcher?.automationId);
+
+      const automation = await getKeywordAutomation(
+        matcher.automationId,
+        eventType === "message"
       );
-    }
 
-    //` Comment keyword Matcher
-    if (webhook_payload.entry[0].changes) {
-      console.log("Comment keyword Matcher",webhook_payload.entry[0].changes[0].value?.text);
-      matcher = await matchKeyword(
-        webhook_payload.entry[0].changes[0]?.value?.text
-      );
-    }
+      if (automation?.trigger && automation?.listener) {
+        const { listener } = automation;
+        const isPro = automation.User?.subscription?.plan === "PRO";
+        console.log("listener", listener);
 
-    //- If keyword match found 
-    if (matcher && matcher?.automationId) {
-      console.log("Matched");
-      // We have a keyword matcher
-
-      //~ If DM/message
-      if (webhook_payload.entry[0].messaging) {
-        //* get All details
-        const automation = await getKeywordAutomation(
-          matcher.automationId,
-          true
-        );
-
-        //* If User set any trigger("DIRECT MESSAGE" | "SMART AI")
-        if (automation && automation?.trigger) {
-          //* if DIRECT MESSAGE(DM)
-          if (
-            automation.listener &&
-            automation.listener.listener === "MESSAGE"
-          ) {
-            //?Trigger :Send DM
-            const direct_message = await sendDM(
-              webhook_payload.entry[0].id,
-              webhook_payload.entry[0].messaging[0].sender.id,
-              automation.listener?.prompt,
-              automation.User?.integrations[0].token!
+        const handleResponse = async (
+          content: string,
+          type: "DM" | "COMMENT"
+        ) => {
+          if (type === "COMMENT") {
+            const automations_post = await getKeywordPost(
+              changes[0].value.media.id,
+              automation?.id
             );
-
-            //* If succuss track it
-            if (direct_message.status === 200) {
-              const tracked = await trackResponses(automation.id, "DM");
-              if (tracked) {
-                return NextResponse.json(
-                  { message: "Message sent" },
-                  { status: 200 }
-                );
-              }
-            }
+            if (!automations_post) return createResponse("Message sent", 200);
           }
 
-          //* If User have Pro and listener is SMAERTAI
-          if (
-            automation.listener &&
-            automation.listener.listener === "SMARTAI" &&
-            automation.User?.subscription?.plan === "PRO"
-          ) {
-            const smart_ai_message = await openai.chat.completions.create({
-              model: "gemini-1.5-flash",
-              messages: [
-                {
-                  role: "assistant",
-                  content: `${automation.listener?.prompt}: Keep responses under 2 sentences`,
-                },
-              ],
-            });
-
-            //* If AI have content createChatHistory for sender and reciever at same time
-            if (smart_ai_message.choices[0].message.content) {
-              const reciever = createChatHistory(
-                automation.id,
-                webhook_payload.entry[0].id,
-                webhook_payload.entry[0].messaging[0].sender.id,
-                webhook_payload.entry[0].messaging[0].message.text
-              );
-
-              const sender = createChatHistory(
-                automation.id,
-                webhook_payload.entry[0].id,
-                webhook_payload.entry[0].messaging[0].sender.id,
-                smart_ai_message.choices[0].message.content
-              );
-
-              await db.$transaction([reciever, sender]);
-
-              //* Send Ai respones to User
-              const direct_message = await sendDM(
-                webhook_payload.entry[0].id, //* useeId
-                webhook_payload.entry[0].messaging[0].sender.id, //* receiverId
-                smart_ai_message.choices[0].message.content, //*content/message
-                automation.User?.integrations[0].token! //* token
-              );
-
-              //* If success then track respones
-              if (direct_message.status === 200) {
-                const tracked = await trackResponses(automation.id, "DM");
-                if (tracked) {
-                  return NextResponse.json({ message: "Message sent" },{ status: 200 });
-                }
-              }
-            }
-          }
-        }
-      }
-
-      //~ If Comments
-      if (
-        webhook_payload.entry[0].changes &&
-        webhook_payload.entry[0].changes[0].field === "comments"
-      ) {
-        //*get automation infos
-        const automation = await getKeywordAutomation(matcher.automationId,false);
-
-        console.log("geting the automations");
-
-        //* get Post for keyword
-        const automations_post = await getKeywordPost(
-          webhook_payload.entry[0].changes[0].value.media.id,
-          automation?.id!
-        );
-
-        console.log("found keyword ", automations_post);
-
-        //* If post have Trigger 
-        if (automation && automations_post && automation.trigger) {
-          console.log("first if");
-
-          //* If Post have listener
-          if (automation.listener) {
-            console.log("first if");
-
-            //* If listener is Message
-            if (automation.listener.listener === "MESSAGE") {
-              console.log(
-                "SENDING DM, WEB HOOK PAYLOAD",
-                webhook_payload,
-                "changes",
-                webhook_payload.entry[0].changes[0].value.from
-              );
-
-              console.log(
-                "COMMENT VERSION:",
-                webhook_payload.entry[0].changes[0].value.from.id
-              );
-
-              //! change
-              const direct_message = await sendPrivateMessage(
-                webhook_payload.entry[0].id,
-                webhook_payload.entry[0].changes[0].value.id,
-                automation.listener?.prompt,
-                automation.User?.integrations[0].token!
-              );
-
-              console.log("DM SENT", direct_message.data);
-              if (direct_message.status === 200) {
-                const tracked = await trackResponses(automation.id, "COMMENT");
-
-                if (tracked) {
-                  return NextResponse.json({message: "Message sent"},{ status: 200 });
-                }
-              }
-            }
-
-            //* If listener is SMARTAI and USER have PRO
-            if (
-              automation.listener.listener === "SMARTAI" &&
-              automation.User?.subscription?.plan === "PRO"
-            ) {
-              const smart_ai_message = await openai.chat.completions.create({
-                model: "gemini-1.5-flash",
-                messages: [
-                  {
-                    role: "assistant",
-                    content: `${automation.listener?.prompt}: keep responses under 2 sentences`,
-                  },
-                ],
-              });
-              if (smart_ai_message.choices[0].message.content) {
-                const reciever = createChatHistory(
-                  automation.id,
-                  webhook_payload.entry[0].id,
-                  webhook_payload.entry[0].changes[0].value.from.id,
-                  webhook_payload.entry[0].changes[0].value.text
-                );
-
-                const sender = createChatHistory(
-                  automation.id,
-                  webhook_payload.entry[0].id,
-                  webhook_payload.entry[0].changes[0].value.from.id,
-                  smart_ai_message.choices[0].message.content
-                );    
-
-                await db.$transaction([reciever, sender]);
-
-                //! change
-                const direct_message = await sendPrivateMessage(
-                  webhook_payload.entry[0].id,
-                  webhook_payload.entry[0].changes[0].value.id,
-                  automation.listener?.prompt,
+          const response =
+            type === "DM"
+              ? await sendDM(
+                  entry.id,
+                  messaging[0].sender.id,
+                  content,
+                  automation.User?.integrations[0].token!
+                )
+              : await sendPrivateMessage(
+                  entry.id,
+                  changes[0].value.id,
+                  content,
                   automation.User?.integrations[0].token!
                 );
 
-                if (direct_message.status === 200) {
-                  const tracked = await trackResponses(
-                    automation.id,
-                    "COMMENT"
-                  );
+          if (response.status === 200) {
+            await trackResponses(automation.id, type);
+            return createResponse("Message sent", 200);
+          }
+        };
 
-                  if (tracked) {
-                    return NextResponse.json({message: "Message sent",},{ status: 200 });
-                  }
-                }
-              }
-            }
+        if (listener.listener === "MESSAGE") {
+          return handleResponse(
+            listener.prompt!,
+            eventType === "message" ? "DM" : "COMMENT"
+          );
+        }
+
+        if (listener.listener === "SMARTAI" && isPro) {
+          const aiResponse = await createAIChatCompletion(listener.prompt!);
+          const aiContent = aiResponse.choices[0].message.content;
+          
+          console.log("aiContent",aiContent);
+          
+
+          if (aiContent) {
+            const senderId =
+              eventType === "message"
+                ? messaging[0].sender.id
+                : changes[0].value.from.id;
+
+            await createChatTransaction(
+              automation.id,
+              { id: entry.id, senderId },
+              userText!,
+              aiContent
+            );
+
+            return handleResponse(
+              aiContent,
+              eventType === "message" ? "DM" : "COMMENT"
+            );
           }
         }
       }
     }
 
-    //- If not keyword match found (existing customer/onGoing conversation)
-    if (!matcher) {
-      const customer_history = await getChatHistory(
-        webhook_payload.entry[0].messaging[0].recipient.id,
-        webhook_payload.entry[0].messaging[0].sender.id
-      )
+    //`If keyword not match
+    if (!matcher && eventType === "message") {
+      const [message] = messaging!;
+      if(!messaging || !message )return createResponse("message is undefinded", 200);
+      console.log("not matcher message",message);
 
-    
+      const history = await getChatHistory(
+        message.recipient.id,
+        message.sender.id
+      );
 
-      if (customer_history.history.length > 0) {
-        if(!customer_history.automationId){
-          return NextResponse.json({message: 'No automation set',},{ status: 200 })
-        }
-        const automation = await findAutomation(customer_history.automationId)
-
-        //*If listener is SMARTAI and USER have PRO
+      if (history.history.length > 0 && history?.automationId) {
+        const automation = await findAutomation(history.automationId!);
         if (
-          automation?.User?.subscription?.plan === 'PRO' &&
-          automation.listener?.listener === 'SMARTAI'
+          automation?.listener?.listener === "SMARTAI" &&
+          automation.User?.subscription?.plan === "PRO"
         ) {
-          //* start AI with chat Hisory context
-          const smart_ai_message = await openai.chat.completions.create({
-            model: 'gemini-1.5-flash',
-            messages: [
-              {
-                role: 'assistant',
-                content: `${automation.listener?.prompt}: keep responses under 2 sentences`,
-              },
-              ...customer_history.history,
-              {
-                role: 'user',
-                content: webhook_payload.entry[0].messaging[0].message.text,
-              },
-            ],
-          })
+          console.log("SMARTAI + PRO");
+          
 
-          if (smart_ai_message.choices[0].message.content) {
-            const reciever = createChatHistory(
-              automation.id,
-              webhook_payload.entry[0].id,
-              webhook_payload.entry[0].messaging[0].sender.id,
-              webhook_payload.entry[0].messaging[0].message.text
-            )
+          const aiResponse = await createAIChatCompletion(
+            automation.listener.prompt!,
+            [
+              ...history.history,
+              { role: "user", content: message.message.text },
+            ]
+          );
 
-            const sender = createChatHistory(
+          // ... rest of handling
+          const aiContent = aiResponse.choices[0].message.content;
+          console.log("aiContent;",aiContent);
+          
+          if (aiContent) {
+            // Unified chat history handling
+            await createChatTransaction(
               automation.id,
-              webhook_payload.entry[0].id,
-              webhook_payload.entry[0].messaging[0].sender.id,
-              smart_ai_message.choices[0].message.content
-            )
-            await db.$transaction([reciever, sender])
-            const direct_message = await sendDM(
-              webhook_payload.entry[0].id,
-              webhook_payload.entry[0].messaging[0].sender.id,
-              smart_ai_message.choices[0].message.content,
+              {
+                id: entry.id,
+                senderId: message.sender.id,
+              },
+              message.message.text,
+              aiContent
+            );
+
+  
+            const response = await sendDM(
+              entry.id,
+              message.sender.id,
+              aiContent,
               automation.User?.integrations[0].token!
-            )
+            );
 
-            if (direct_message.status === 200) {
-              //if successfully send we return
-              return NextResponse.json({message: 'Message sent'},{ status: 200 })
+            if (response.status === 200) {
+              await trackResponses(automation.id, "DM");
+              return createResponse("Message sent", 200);
             }
           }
         }
       }
-
-      return NextResponse.json({message: 'No automation set',},{ status: 200 }
-      )
     }
 
     return NextResponse.json({ message: "No automation set" }, { status: 200 });
   } catch (error) {
-    console.error(error);
+    console.log("⚠️❌🚨⛔", error);
     return NextResponse.json({ message: "No automation set" }, { status: 200 });
   }
 }
 
-
-
-
-
-//? live_comments
+const createResponse = (message: string, status: number) =>
+  NextResponse.json({ message }, { status: 200 });

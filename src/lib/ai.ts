@@ -6,3 +6,15 @@ export const openai = new OpenAI({
 });
 
 
+export const createAIChatCompletion = async (prompt: string, history?: any) =>
+    await openai.chat.completions.create({
+      model: "gemini-1.5-flash", // Fixed model name (gemini is Google's model)
+      messages: [
+        {
+          role: "assistant",
+          content: `${prompt}: Keep responses under 2 sentences`,
+        },
+        ...history,
+      ],
+    });
+

@@ -9,6 +9,9 @@ export const matchKeyword = async (keyword: string) => {
         equals: keyword,
         mode: "insensitive",
       },
+      Automation:{
+        active:true
+      }
     },
   });
 };
@@ -129,3 +132,15 @@ export const getChatHistory = async (sender: string, reciever: string) => {
     automationId: history[history.length - 1].automationId,
   }
 }
+
+
+export const createChatTransaction = (
+  automationId: string,
+  entry: any,
+  message: string,
+  response: string
+) =>
+  db.$transaction([
+    createChatHistory(automationId, entry.id, entry.senderId, message),
+    createChatHistory(automationId, entry.id, entry.senderId, response),
+  ]);

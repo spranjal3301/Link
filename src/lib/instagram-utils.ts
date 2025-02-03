@@ -84,3 +84,5 @@ export const generateTokens = async (code: string) => {
     return long_token.data
   }
 }
+
+
