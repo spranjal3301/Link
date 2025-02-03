@@ -33,6 +33,8 @@ export async function POST(req: NextRequest) {
 
     const matcher = userText ? await matchKeyword(userText) : null;
 
+    if(!userText)return createResponse("userText undefind",200);
+
     console.log("eventType",eventType);
     console.log("userText",userText);
 
@@ -108,7 +110,7 @@ export async function POST(req: NextRequest) {
                 : changes[0].value.from.id;
 
                 try {
-                  createChatTransaction(
+                  await createChatTransaction(
                     automation.id,
                     { id: entry.id, senderId },
                     userText!,
@@ -166,7 +168,7 @@ export async function POST(req: NextRequest) {
           
           if (aiContent) {
             // Unified chat history handling
-            createChatTransaction(
+            await createChatTransaction(
               automation.id,
               {
                 id: entry.id,

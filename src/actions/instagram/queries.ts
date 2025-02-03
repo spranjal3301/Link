@@ -134,16 +134,14 @@ export const getChatHistory = async (sender: string, reciever: string) => {
 }
 
 
-export const createChatTransaction = (
+
+export const createChatTransaction = async (
   automationId: string,
   entry: any,
   message: string,
   response: string
-) =>{
-  const reciever = createChatHistory(automationId, entry.id, entry.senderId, message);
-  const sender = createChatHistory(automationId, entry.id, entry.senderId, response);
-  db.$transaction([
-    reciever,
-    sender,
-  ]);
+) => {
+  const receiverPromise = createChatHistory(automationId, entry.id, entry.senderId, message);
+  const senderPromise = createChatHistory(automationId, entry.id, entry.senderId, response);
+  return await db.$transaction([receiverPromise, senderPromise]);
 }
