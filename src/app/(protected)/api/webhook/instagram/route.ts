@@ -18,10 +18,12 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  
   const webhook_payload = await req.json();
   let matcher;
   try {
+    console.log(webhook_payload);
+    
+
     //` DM keyword Match
     if (webhook_payload.entry[0].messaging) {
        console.log("DM keyword Match",webhook_payload.entry[0].messaging[0]?.message?.text);
@@ -322,3 +324,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "No automation set" }, { status: 200 });
   }
 }
+
+
+
+
+
+//? live_comments
