@@ -139,8 +139,11 @@ export const createChatTransaction = (
   entry: any,
   message: string,
   response: string
-) =>
+) =>{
+  const reciever = createChatHistory(automationId, entry.id, entry.senderId, message);
+  const sender = createChatHistory(automationId, entry.id, entry.senderId, response);
   db.$transaction([
-    createChatHistory(automationId, entry.id, entry.senderId, message),
-    createChatHistory(automationId, entry.id, entry.senderId, response),
+    reciever,
+    sender,
   ]);
+}

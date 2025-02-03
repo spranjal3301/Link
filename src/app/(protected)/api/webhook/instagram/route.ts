@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
                 ? messaging[0].sender.id
                 : changes[0].value.from.id;
 
-            await createChatTransaction(
+            createChatTransaction(
               automation.id,
               { id: entry.id, senderId },
               userText!,
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
           
           if (aiContent) {
             // Unified chat history handling
-            await createChatTransaction(
+            createChatTransaction(
               automation.id,
               {
                 id: entry.id,
