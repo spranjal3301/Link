@@ -19,7 +19,7 @@ export const createAIChatCompletion = async (prompt: string, history: Thistory[]
     messages: [
       {
         role: "assistant",
-        content: `${prompt}: Keep responses under 2 sentences`
+        content: `${prompt}: Keep responses under 2 sentences (maximum 50 words)`
       },
       ...history
     ] as ChatCompletionMessageParam[],

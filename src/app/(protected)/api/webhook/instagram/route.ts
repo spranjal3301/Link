@@ -77,6 +77,8 @@ export async function POST(req: NextRequest) {
                   automation.User?.integrations[0].token!
                 );
 
+            console.log("Send Dm response",response);
+
           if (response.status === 200) {
             await trackResponses(automation.id, type);
             return createResponse("Message sent", 200);
@@ -105,12 +107,17 @@ export async function POST(req: NextRequest) {
                 ? messaging[0].sender.id
                 : changes[0].value.from.id;
 
-            createChatTransaction(
-              automation.id,
-              { id: entry.id, senderId },
-              userText!,
-              aiContent
-            );
+                try {
+                  createChatTransaction(
+                    automation.id,
+                    { id: entry.id, senderId },
+                    userText!,
+                    aiContent
+                  );
+                } catch (error) {
+                  console.log("createChatTransaction failed")
+                }
+           
 
             return handleResponse(
               aiContent,
