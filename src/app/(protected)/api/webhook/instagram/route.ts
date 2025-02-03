@@ -130,7 +130,10 @@ export async function POST(req: NextRequest) {
         message.sender.id
       );
 
-      if (history.history.length > 0 && history?.automationId) {
+      if(!history?.automationId)return createResponse("this is reply message | automationId not found", 200);
+
+
+      if (history.history.length > 0) {
         const automation = await findAutomation(history.automationId!);
         if (
           automation?.listener?.listener === "SMARTAI" &&
