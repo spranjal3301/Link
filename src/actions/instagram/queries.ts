@@ -25,7 +25,6 @@ export const getKeywordAutomation = async (
       id: automationId,
       active: true, //?change
     },
-
     include: {
       dms: dm,
       trigger: {
@@ -91,7 +90,7 @@ export const getKeywordPost = async (postId: string, automationId: string) => {
 export const getChatHistory = async (sender: string, reciever: string) => {
   const history = await db.dms.findMany({
     where: {
-      AND: [{ senderId: sender }, { reciever }],
+      AND: [{ senderId: sender }, { reciever },{Automation:{active:true}}],
     },
     orderBy: { createdAt: "asc" },
   });
