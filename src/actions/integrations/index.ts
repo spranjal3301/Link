@@ -55,6 +55,7 @@ export const onInstaIntegrate = async (code:string) => {
       const token = await generateTokens(code);
 
       if (token) {
+        console.log(token)
         const insta_id_res = await fetch(
           `${process.env.INSTAGRAM_BASE_URL}/me?fields=user_id&access_token=${token.access_token}`
         )
