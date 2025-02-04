@@ -110,21 +110,20 @@ export async function POST(req: NextRequest) {
                 : changes[0].value.from.id;
 
                 try {
-                  const reciever = createChatHistory(
+                  const receiverPromise = createChatHistory(
                     automation.id,
                     entry.id,
                     senderId,
                     userText
-                  )
-  
-                  const sender = createChatHistory(
+                  );
+                  const senderPromise = createChatHistory(
                     automation.id,
                     entry.id,
                     senderId,
                     aiContent
-                  )
-  
-                  await db.$transaction([reciever, sender])
+                  );
+                
+                  await db.$transaction([receiverPromise, senderPromise]);
 
                   // await createChatTransaction(
                   //   automation.id,
