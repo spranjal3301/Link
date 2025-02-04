@@ -113,27 +113,12 @@ export async function POST(req: NextRequest) {
                   console.log(automation.id,entry.id, senderId, userText);
                   
 
-                  const receiverPromise = createChatHistory(
+                  await createChatTransaction(
                     automation.id,
-                    entry.id,
-                    senderId,
-                    userText
-                  );
-                  const senderPromise = createChatHistory(
-                    automation.id,
-                    entry.id,
-                    senderId,
+                    entry.id,senderId,
+                    userText!,
                     aiContent
                   );
-                
-                  await db.$transaction([receiverPromise, senderPromise]);
-
-                  // await createChatTransaction(
-                  //   automation.id,
-                  //   { id: entry.id, senderId },
-                  //   userText!,
-                  //   aiContent
-                  // );
                 } catch (error) {
                   console.log("createChatTransaction failed error",error)
                 }
@@ -188,10 +173,8 @@ export async function POST(req: NextRequest) {
             // Unified chat history handling
             await createChatTransaction(
               automation.id,
-              {
-                id: entry.id,
-                senderId: message.sender.id,
-              },
+              entry.id,
+              message.sender.id,
               message.message.text,
               aiContent
             );

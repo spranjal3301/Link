@@ -9,9 +9,9 @@ export const matchKeyword = async (keyword: string) => {
         equals: keyword,
         mode: "insensitive",
       },
-      Automation:{
-        active:true
-      }
+      Automation: {
+        active: true,
+      },
     },
   });
 };
@@ -23,7 +23,7 @@ export const getKeywordAutomation = async (
   return await db.automation.findUnique({
     where: {
       id: automationId,
-      active:true, //?change
+      active: true, //?change
     },
 
     include: {
@@ -79,6 +79,38 @@ export const trackResponses = async (
   }
 };
 
+export const getKeywordPost = async (postId: string, automationId: string) => {
+  return await db.post.findFirst({
+    where: {
+      AND: [{ postid: postId }, { automationId }],
+    },
+    select: { automationId: true },
+  });
+};
+
+export const getChatHistory = async (sender: string, reciever: string) => {
+  const history = await db.dms.findMany({
+    where: {
+      AND: [{ senderId: sender }, { reciever }],
+    },
+    orderBy: { createdAt: "asc" },
+  });
+  const chatSession: {
+    role: "assistant" | "user";
+    content: string;
+  }[] = history.map((chat) => {
+    return {
+      role: chat.reciever ? "assistant" : "user",
+      content: chat.message!,
+    };
+  });
+
+  return {
+    history: chatSession,
+    automationId: history[history.length - 1].automationId,
+  };
+};
+
 export const createChatHistory = (
   automationId: string,
   sender: string,
@@ -98,50 +130,45 @@ export const createChatHistory = (
         },
       },
     },
-  })
-}
-
-export const getKeywordPost = async (postId: string, automationId: string) => {
-  return await db.post.findFirst({
-    where: {
-      AND: [{ postid: postId }, { automationId }],
-    },
-    select: { automationId: true },
-  })
-}
-
-export const getChatHistory = async (sender: string, reciever: string) => {
-  const history = await db.dms.findMany({
-    where: {
-      AND: [{ senderId: sender }, { reciever }],
-    },
-    orderBy: { createdAt: 'asc' },
-  })
-  const chatSession: {
-    role: 'assistant' | 'user'
-    content: string
-  }[] = history.map((chat) => {
-    return {
-      role: chat.reciever ? 'assistant' : 'user',
-      content: chat.message!,
-    }
-  })
-
-  return {
-    history: chatSession,
-    automationId: history[history.length - 1].automationId,
-  }
-}
-
-
+  });
+};
 
 export const createChatTransaction = async (
   automationId: string,
-  entry: any,
+  senderId: string,
+  recieverId: string,
   message: string,
   response: string
 ) => {
-  const receiverPromise = createChatHistory(automationId, entry.id, entry.senderId, message);
-  const senderPromise = createChatHistory(automationId, entry.id, entry.senderId, response);
-  return await db.$transaction([receiverPromise, senderPromise]);
-}
+  return db.$transaction(async (tx) => {
+    const receiver = await tx.automation.update({
+      where: {
+        id: automationId,
+      },
+      data: {
+        dms: {
+          create: {
+            reciever: recieverId,
+            senderId,
+            message,
+          },
+        },
+      },
+    });
+
+    const sender = await tx.automation.update({
+      where: {
+        id: automationId,
+      },
+      data: {
+        dms: {
+          create: {
+            reciever: recieverId,
+            senderId,
+            message: response,
+          },
+        },
+      },
+    });
+  });
+};
