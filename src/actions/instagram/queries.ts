@@ -111,13 +111,13 @@ export const getChatHistory = async (sender: string, reciever: string) => {
   };
 };
 
-export const createChatHistory = (
+export const createChatHistory = async (
   automationId: string,
   sender: string,
   reciever: string,
   message: string
 ) => {
-  return db.automation.update({
+  return await db.automation.update({
     where: {
       id: automationId,
     },
@@ -140,7 +140,7 @@ export const createChatTransaction = async (
   message: string,
   response: string
 ) => {
-  return db.$transaction(async (tx) => {
+  db.$transaction(async (tx) => {
     const receiver = await tx.automation.update({
       where: {
         id: automationId,

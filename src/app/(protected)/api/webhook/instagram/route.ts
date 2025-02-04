@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
                   console.log(automation.id,entry.id, senderId, userText);
                   
 
-                  await createChatTransaction(
+                  createChatTransaction(
                     automation.id,
                     entry.id,senderId,
                     userText!,
@@ -149,7 +149,7 @@ export async function POST(req: NextRequest) {
       }
 
       if (history.history.length > 0) {
-        const automation = await findAutomation(history.automationId!);
+        const automation = await findAutomation(history.automationId);
         if (
           automation?.listener?.listener === "SMARTAI" &&
           automation.User?.subscription?.plan === "PRO"
@@ -171,7 +171,7 @@ export async function POST(req: NextRequest) {
           
           if (aiContent) {
             // Unified chat history handling
-            await createChatTransaction(
+            createChatTransaction(
               automation.id,
               entry.id,
               message.sender.id,
@@ -202,6 +202,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: "No automation set" }, { status: 200 });
   }
 }
+
 
 const createResponse = (message: string, status: number) =>
   NextResponse.json({ message }, { status: 200 });
