@@ -110,6 +110,9 @@ export async function POST(req: NextRequest) {
                 : changes[0].value.from.id;
 
                 try {
+                  console.log(automation.id,entry.id, senderId, userText);
+                  
+
                   const receiverPromise = createChatHistory(
                     automation.id,
                     entry.id,
