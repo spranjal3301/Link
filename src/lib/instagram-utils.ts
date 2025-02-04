@@ -77,11 +77,13 @@ export const generateTokens = async (code: string) => {
   const token = await shortTokenRes.json()
   if (token.permissions.length > 0) {
     console.log(token, 'got permissions')
-    const long_token = await axios.get(
+    const long_token = await fetch(
       `${process.env.INSTAGRAM_BASE_URL}/access_token?grant_type=ig_exchange_token&client_secret=${process.env.INSTAGRAM_CLIENT_SECRET}&access_token=${token.access_token}`
     )
 
-    return long_token.data
+    const long_token_data = await long_token.json(); 
+
+    return long_token_data;
   }
 }
 

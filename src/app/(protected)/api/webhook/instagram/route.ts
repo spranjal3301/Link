@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
 
     if(!userText)return createResponse("userText undefind",200);
 
+    console.log("webhookPayload",webhookPayload);
     console.log("eventType",eventType);
     console.log("userText",userText);
 
@@ -206,3 +207,17 @@ export async function POST(req: NextRequest) {
 
 const createResponse = (message: string, status: number) =>
   NextResponse.json({ message }, { status: 200 });
+
+
+
+
+/*
+Comment or (comment DM both)
+  send Dm(not smart ai)
+    comment reply
+
+onReel send only
+  choice reel reaction 
+    reel reaction
+
+*/

@@ -10,7 +10,7 @@ interface Props {
 
 const Page: NextPage<Props> = async ({ searchParams: { code } }) => {
   if (code) {
-    console.log(code);
+    console.log("code",code);
     const user = await onInstaIntegrate(code.split("#_")[0]);
     if (user.status === 200) {
       return redirect(

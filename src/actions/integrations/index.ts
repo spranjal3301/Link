@@ -55,16 +55,19 @@ export const onInstaIntegrate = async (code:string) => {
       const token = await generateTokens(code);
 
       if (token) {
-        const insta_id = await axios.get(
+        const insta_id_res = await fetch(
           `${process.env.INSTAGRAM_BASE_URL}/me?fields=user_id&access_token=${token.access_token}`
         )
+        const insta_id = await insta_id_res.json();
+        console.log(insta_id);
+
         const today = new Date()
         const expire_date = today.setDate(today.getDate() + 60)
         const create = await createIntegration(
           clerkUser.id,
           token.access_token,
           new Date(expire_date),
-          insta_id.data.user_id
+          insta_id.user_id
         )
         return { status: 200, data: create }
       }
