@@ -94,6 +94,9 @@ export const getChatHistory = async (sender: string, reciever: string) => {
     },
     orderBy: { createdAt: "asc" },
   });
+
+  if(!history || history.length==0)return null;
+
   const chatSession: {
     role: "assistant" | "user";
     content: string;

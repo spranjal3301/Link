@@ -11,6 +11,7 @@ import {
 import { openai, createAIChatCompletion } from "@/lib/ai";
 import { sendDM, sendPrivateMessage } from "@/lib/instagram-utils";
 import { db } from "@/lib/prisma";
+import { Ttrigger } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
     if(!userText)return createResponse("userText undefind",200);
 
     console.log("webhookPayload",webhookPayload);
+    console.log(entry);
     console.log("eventType",eventType);
     console.log("userText",userText);
 
@@ -55,7 +57,7 @@ export async function POST(req: NextRequest) {
 
         const handleResponse = async (
           content: string,
-          type: "DM" | "COMMENT"
+          type: Ttrigger
         ) => {
           if (type === "COMMENT") {
             const automations_post = await getKeywordPost(
@@ -212,6 +214,14 @@ const createResponse = (message: string, status: number) =>
 
 
 /*
+~ DM --> DM
+
+~ COMMENT --> DM
+- COMMENT --> COMMENT_REPLY
+- COMMENT --> DM_COMMENT_REPLY
+
+- REEL --> REEL_REACTION 
+
 Comment or (comment DM both)
   send Dm(not smart ai)
     comment reply

@@ -103,7 +103,7 @@ model Keyword {
 
 model Trigger {
   id           String     @id @default(uuid()) @db.Uuid
-  type         String    //~ comment or Dm
+  type         String    //~ COmment , Dm ,DM-COMMENT , REEL
   automationId String?     @db.Uuid
   Automation   Automation? @relation(fields: [automationId], references: [id], onDelete: Cascade)
 }
