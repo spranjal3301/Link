@@ -37,10 +37,11 @@ export async function POST(req: NextRequest) {
     
     console.log("webhookPayload",webhookPayload);
     console.log(entry);
+    console.log(messaging?.[0]?.message);
     console.log("eventType",eventType);
     console.log("userText",userText);
 
-    
+
     if(!userText)return createResponse("userText undefind",200);
     
     //` If keyword match exits for DM or Comments
