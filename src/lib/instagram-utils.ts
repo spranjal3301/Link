@@ -92,21 +92,19 @@ export const generateTokens = async (code: string) => {
 export const messageReaction = async (
   userId: string,
   recieverId: string,
-  reelMid: string,
+  MessageId: string,
   token?: string
 ) => {
   return await axios.post(
-    `${process.env.INSTAGRAM_BASE_URL}/v21.0/${userId}/messages`,
+    `${process.env.INSTAGRAM_BASE_URL}/v22.0/${userId}/messages`,
     {
-      "recipient": { "id": recieverId },
+      "recipient": {"id": recieverId},
       "sender_action": "react",
-      "reaction": {
-        "reaction": "😍", // Emoji or predefined value (e.g., "love")
-        "emoji": "\u{1F60D}", // Unicode for emoji
-        "action": "react", // or "unreact"
-        "mid": reelMid
-      }
-    },
+      "payload": {
+        "message_id": MessageId,
+        "reaction": "love"
+      },
+    }, 
     {
       headers: {
         Authorization: `Bearer IGAAQbT9zn7pNBZAE84WklXS0ZAya3diamRRdmdOanFhUUN4ZAXNZAR29TajNlUnQ2anc5bDFTWTdIc3NLVTJQZAy1TYzVUTUQ0cnUyWm1tVkxPVFQ3UW95RE9PUHQwMGVwOUV6SjF2VEJHOWVUdHVzalB2TE1pUlUyenJiMWJzYXRENAZDZD`,

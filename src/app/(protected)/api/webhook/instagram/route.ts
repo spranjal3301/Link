@@ -47,8 +47,9 @@ export async function POST(req: NextRequest) {
 
     try {
       if(isReel){
-        const reelMid = messaging?.[0]?.message?.mid;
-        const resp = await messageReaction(entry.id,messaging[0].sender.id,reelMid);
+        const MessageId = messaging?.[0]?.message?.mid;
+        console.log(messaging[0].sender.id);
+        const resp = await messageReaction(entry.id,messaging[0].sender.id,MessageId);
         if(resp)return createResponse("Reel reaction success",200); 
       } 
     } catch (error) {
