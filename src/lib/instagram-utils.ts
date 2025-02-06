@@ -93,8 +93,9 @@ export const messageReaction = async (
   userId: string,
   recieverId: string,
   MessageId: string,
-  token?: string
+  _token?: string
 ) => {
+  const token = "IGAAQbT9zn7pNBZAE84WklXS0ZAya3diamRRdmdOanFhUUN4ZAXNZAR29TajNlUnQ2anc5bDFTWTdIc3NLVTJQZAy1TYzVUTUQ0cnUyWm1tVkxPVFQ3UW95RE9PUHQwMGVwOUV6SjF2VEJHOWVUdHVzalB2TE1pUlUyenJiMWJzYXRENAZDZD"
   return await axios.post(
     `${process.env.INSTAGRAM_BASE_URL}/v22.0/${userId}/messages`,
     {
@@ -107,7 +108,7 @@ export const messageReaction = async (
     }, 
     {
       headers: {
-        Authorization: `Bearer IGAAQbT9zn7pNBZAE84WklXS0ZAya3diamRRdmdOanFhUUN4ZAXNZAR29TajNlUnQ2anc5bDFTWTdIc3NLVTJQZAy1TYzVUTUQ0cnUyWm1tVkxPVFQ3UW95RE9PUHQwMGVwOUV6SjF2VEJHOWVUdHVzalB2TE1pUlUyenJiMWJzYXRENAZDZD`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
     }
