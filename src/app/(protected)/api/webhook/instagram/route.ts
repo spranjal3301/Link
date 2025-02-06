@@ -13,6 +13,7 @@ import { sendDM, sendPrivateMessage } from "@/lib/instagram-utils";
 import { db } from "@/lib/prisma";
 import { Ttrigger } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
+import { messageReaction } from '../../../../../lib/instagram-utils';
 
 export async function GET(req: NextRequest) {
   const hub = req.nextUrl.searchParams.get("hub.challenge");
@@ -34,12 +35,27 @@ export async function POST(req: NextRequest) {
 
     const matcher = userText ? await matchKeyword(userText) : null;
 
+    const isReel = messaging?.[0]?.message?.attachments[0]?.type === 'ig_reel';
+
+   
     
     console.log("webhookPayload",webhookPayload);
     console.log(entry);
     console.log(messaging?.[0]?.message);
     console.log("eventType",eventType);
     console.log("userText",userText);
+
+    try {
+      if(isReel){
+        const reelMid = messaging?.[0]?.message?.mid;
+        const resp = await messageReaction(entry.id,messaging[0].sender.id,reelMid);
+        if(resp)return createResponse("Reel reaction success",200); 
+      } 
+    } catch (error) {
+      console.log("error While Reel reaction",error)
+    }
+
+    
 
 
     if(!userText)return createResponse("userText undefind",200);
@@ -232,5 +248,35 @@ Comment or (comment DM both)
 onReel send only
   choice reel reaction 
     reel reaction
+
+
+  messaging?.[0]?.message.attachments[0].type == 
+
+  {
+  mid: 'aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDM4MTcxNDQ0Njg5OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1ODk4NzY1MTUxNzIyMjMxMDozMjA3NDU4MTQ3MTUzOTQxMzY2MjYzNDA2MTE5ODI2MjI3MgZDZD',
+  attachments: [ { type: 'ig_reel', payload: [Object] } ]
+  }
+
+
+  webhookPayload {
+  object: 'instagram',
+  entry: [
+   {
+    time: 1738766546170,
+  id: '17841438171444689',
+  messaging: [
+    {
+      sender: [Object],
+      recipient: [Object],
+      timestamp: 1738766545650,
+      message: {
+  mid: 'aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDM4MTcxNDQ0Njg5OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI1ODk4NzY1MTUxNzIyMjMxMDozMjA3NDU4MTQ3MTUzOTQxMzY2MjYzNDA2MTE5ODI2MjI3MgZDZD',
+  attachments: [ { type: 'ig_reel', payload: [Object] } ]
+}
+    }
+  ]
+}
+  ]
+}
 
 */

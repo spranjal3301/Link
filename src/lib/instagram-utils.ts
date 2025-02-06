@@ -1,32 +1,31 @@
-import axios from "axios"
-
+import axios from "axios";
 
 export const sendDM = async (
-    userId: string,
-    recieverId: string,
-    prompt: string,
-    token: string
-  ) => {
-    console.log('sending message sendDM function ')
-    //- maybe v22.0
-    return await axios.post(
-      `${process.env.INSTAGRAM_BASE_URL}/v21.0/${userId}/messages`,
-      {
-        recipient: {
-          id: recieverId,
-        },
-        message: {
-          text: prompt,
-        },
+  userId: string,
+  recieverId: string,
+  prompt: string,
+  token: string
+) => {
+  console.log("sending message sendDM function ");
+  //- maybe v22.0
+  return await axios.post(
+    `${process.env.INSTAGRAM_BASE_URL}/v21.0/${userId}/messages`,
+    {
+      recipient: {
+        id: recieverId,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-}
+      message: {
+        text: prompt,
+      },
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
 
 export const sendPrivateMessage = async (
   userId: string,
@@ -34,7 +33,7 @@ export const sendPrivateMessage = async (
   prompt: string,
   token: string
 ) => {
-  console.log('sending message')
+  console.log("sending message");
   return await axios.post(
     `${process.env.INSTAGRAM_BASE_URL}/${userId}/messages`,
     {
@@ -48,48 +47,71 @@ export const sendPrivateMessage = async (
     {
       headers: {
         Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     }
-  )
-}
+  );
+};
 
 export const generateTokens = async (code: string) => {
-  const insta_form = new FormData()
-  insta_form.append('client_id', process.env.INSTAGRAM_CLIENT_ID as string)
+  const insta_form = new FormData();
+  insta_form.append("client_id", process.env.INSTAGRAM_CLIENT_ID as string);
 
   insta_form.append(
-    'client_secret',
+    "client_secret",
     process.env.INSTAGRAM_CLIENT_SECRET as string
-  )
-  insta_form.append('grant_type', 'authorization_code')
+  );
+  insta_form.append("grant_type", "authorization_code");
   insta_form.append(
-    'redirect_uri',
+    "redirect_uri",
     `${process.env.NEXT_PUBLIC_HOST_URL}/callback/instagram`
-  )
-  insta_form.append('code', code)
+  );
+  insta_form.append("code", code);
 
   const shortTokenRes = await fetch(process.env.INSTAGRAM_TOKEN_URL as string, {
-    method: 'POST',
+    method: "POST",
     body: insta_form,
-  })
+  });
 
-  const token = await shortTokenRes.json()
+  const token = await shortTokenRes.json();
   if (token.permissions.length > 0) {
-    console.log(token, 'got permissions');
-    console.log('long token function')
-
-
+    console.log(token, "got permissions");
+    console.log("long token function");
 
     const long_token = await fetch(
       `${process.env.INSTAGRAM_BASE_URL}/access_token?grant_type=ig_exchange_token&client_secret=${process.env.INSTAGRAM_CLIENT_SECRET}&access_token=${token.access_token}`
-    )
+    );
 
-    const long_token_data = await long_token.json(); 
+    const long_token_data = await long_token.json();
     console.log(long_token_data);
 
     return long_token_data;
   }
-}
+};
 
-
+export const messageReaction = async (
+  userId: string,
+  recieverId: string,
+  reelMid: string,
+  token?: string
+) => {
+  return await axios.post(
+    `${process.env.INSTAGRAM_BASE_URL}/v21.0/${userId}/messages`,
+    {
+      "recipient": { "id": recieverId },
+      "sender_action": "react",
+      "reaction": {
+        "reaction": "😍", // Emoji or predefined value (e.g., "love")
+        "emoji": "\u{1F60D}", // Unicode for emoji
+        "action": "react", // or "unreact"
+        "mid": reelMid
+      }
+    },
+    {
+      headers: {
+        Authorization: `Bearer IGAAQbT9zn7pNBZAE84WklXS0ZAya3diamRRdmdOanFhUUN4ZAXNZAR29TajNlUnQ2anc5bDFTWTdIc3NLVTJQZAy1TYzVUTUQ0cnUyWm1tVkxPVFQ3UW95RE9PUHQwMGVwOUV6SjF2VEJHOWVUdHVzalB2TE1pUlUyenJiMWJzYXRENAZDZD`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
