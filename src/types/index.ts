@@ -1,6 +1,6 @@
 export type Tlistener = "MESSAGE" | "SMARTAI";
 
-export type Ttrigger = "COMMENT" | "DM";
+export type Ttrigger = "COMMENT" | "DM" | "REEL_REPLY";
 
 export type Tpost = {
   postid: string;
@@ -10,3 +10,5 @@ export type Tpost = {
 };
 
 export type TintegrationStrategy = "INSTAGRAM" | "CRM";
+
+// export type TreelReaction = 

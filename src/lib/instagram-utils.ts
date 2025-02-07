@@ -93,9 +93,9 @@ export const messageReaction = async (
   userId: string,
   recieverId: string,
   MessageId: string,
-  _token?: string
+  token: string,
+  reaction?:string
 ) => {
-  const token = "IGAAQbT9zn7pNBZAE84WklXS0ZAya3diamRRdmdOanFhUUN4ZAXNZAR29TajNlUnQ2anc5bDFTWTdIc3NLVTJQZAy1TYzVUTUQ0cnUyWm1tVkxPVFQ3UW95RE9PUHQwMGVwOUV6SjF2VEJHOWVUdHVzalB2TE1pUlUyenJiMWJzYXRENAZDZD"
   return await axios.post(
     `${process.env.INSTAGRAM_BASE_URL}/v22.0/${userId}/messages`,
     {
@@ -105,6 +105,26 @@ export const messageReaction = async (
         "message_id": MessageId,
         "reaction": "love"
       },
+    }, 
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+};
+
+
+export const commentReply = async (
+  commentId: string,
+  _token?: string,
+) => {
+  const token = "IGAAQbT9zn7pNBZAE84WklXS0ZAya3diamRRdmdOanFhUUN4ZAXNZAR29TajNlUnQ2anc5bDFTWTdIc3NLVTJQZAy1TYzVUTUQ0cnUyWm1tVkxPVFQ3UW95RE9PUHQwMGVwOUV6SjF2VEJHOWVUdHVzalB2TE1pUlUyenJiMWJzYXRENAZDZD";
+  return await axios.post(
+    `${process.env.INSTAGRAM_BASE_URL}/v22.0/${commentId}/replies`,
+    {
+      "message":"Thanks for sharing!"
     }, 
     {
       headers: {

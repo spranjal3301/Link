@@ -9,7 +9,7 @@ import {
   getKeywordPost,
 } from "@/actions/instagram/queries";
 import { openai, createAIChatCompletion } from "@/lib/ai";
-import { sendDM, sendPrivateMessage } from "@/lib/instagram-utils";
+import { commentReply, sendDM, sendPrivateMessage } from "@/lib/instagram-utils";
 import { db } from "@/lib/prisma";
 import { Ttrigger } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
@@ -45,17 +45,21 @@ export async function POST(req: NextRequest) {
     console.log("eventType",eventType);
     console.log("userText",userText);
 
-    try {
-      if(isReel){
-        const MessageId = messaging?.[0]?.message?.mid;
-        console.log(messaging[0].sender.id);
-        const resp = await messageReaction(entry.id,messaging[0].sender.id,MessageId);
-        if(resp)return createResponse("Reel reaction success",200); 
-      } 
-    } catch (error) {
-      console.log("error While Reel reaction",error)
+    if(eventType == "comment"){
+      const commentId = changes?.[0]?.value?.id;
+      console.log("commentId",commentId);
+      const resp = await commentReply(commentId);
+      if(resp)return createResponse("Comment replay success",200); 
     }
 
+ 
+    //   if(isReel){
+    //     const MessageId = messaging?.[0]?.message?.mid;
+    //     console.log(messaging[0].sender.id);
+        // const resp = await messageReaction(entry.id,messaging[0].sender.id,MessageId);
+    //     if(resp)return createResponse("Reel reaction success",200); 
+    //   } 
+  
     
 
 
@@ -77,7 +81,7 @@ export async function POST(req: NextRequest) {
 
         const handleResponse = async (
           content: string,
-          type: Ttrigger
+          type: "COMMENT" | "DM"
         ) => {
           if (type === "COMMENT") {
             const automations_post = await getKeywordPost(
