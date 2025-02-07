@@ -45,12 +45,12 @@ export async function POST(req: NextRequest) {
     console.log("eventType",eventType);
     console.log("userText",userText);
 
-    if(eventType == "comment"){
-      const commentId = changes?.[0]?.value?.id;
-      console.log("commentId",commentId);
-      const resp = await commentReply(commentId);
-      if(resp)return createResponse("Comment replay success",200); 
-    }
+    // if(eventType == "comment"){
+    //   const commentId = changes?.[0]?.value?.id;
+    //   console.log("commentId",commentId);
+    //   const resp = await commentReply(commentId);
+    //   if(resp)return createResponse("Comment replay success",200); 
+    // }
 
  
     //   if(isReel){
