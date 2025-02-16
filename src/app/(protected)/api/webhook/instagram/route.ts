@@ -58,7 +58,7 @@ export async function POST(req: NextRequest) {
       console.log(isSelfReply);
 
       if (isSelfReply) return createResponse("Self Reply Event", 200);
-
+      console.log("message", messaging?.[0]);
       await handleKeywordMatch(
         matcher.automationId,
         eventType,
