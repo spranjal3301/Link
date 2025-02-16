@@ -163,7 +163,7 @@ export const handleKeywordMatch = async (
   changes: any,
   entry: any
 ) => {
-  console.log("matched automationId");
+  console.log("matched automationId",automationId);
 
   const automation = await getKeywordAutomation(
     automationId,
