@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const webhookPayload = await req.json();
     const [entry] = webhookPayload.entry; //- webhook_payload.entry[0]
     const { messaging, changes } = entry;
-    const instagramId = entry.id;
+    const instagramId = entry?.id;
 
     const eventType = messaging
     ? "message"
@@ -20,8 +20,11 @@ export async function POST(req: NextRequest) {
     ? "comment"
     : null;
     const userText = messaging?.[0]?.message?.text ?? changes?.[0]?.value?.text;
-    const isReel = messaging?.[0]?.message?.attachments[0]?.type === 'ig_reel';
+    console.log("userText",userText);
+    
 
+    const isReel = messaging?.[0]?.message?.attachments[0]?.type === 'ig_reel';
+    console.log("isReel",isReel);
 
 
     if(isReel){
@@ -44,8 +47,8 @@ export async function POST(req: NextRequest) {
 
     if(matcher && matcher?.automationId && eventType){
       const isSelfReply =  eventType == 'message' ? 
-                          (entry.id==messaging[0]?.sender?.id) :
-                          (entry.id==changes[0]?.value?.id);
+                          (entry.id==messaging?.[0]?.sender?.id) :
+                          (entry.id==changes?.[0]?.value?.id);
 
       console.log(isSelfReply);
                           
