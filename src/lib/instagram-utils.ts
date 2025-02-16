@@ -170,6 +170,9 @@ export const handleKeywordMatch = async (
     eventType === "message"
   );
 
+  console.log("automation",automation);
+  
+
   if (!automation?.trigger || !automation?.listener) {
     return null;
   }

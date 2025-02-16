@@ -45,6 +45,9 @@ export async function POST(req: NextRequest) {
 
     const matcher = await matchUserKeyword(instagramId,userText);
 
+
+
+    
     if(matcher && matcher?.automationId && eventType){
       const isSelfReply =  eventType == 'message' ? 
                           (entry.id==messaging?.[0]?.sender?.id) :
@@ -63,6 +66,8 @@ export async function POST(req: NextRequest) {
         entry
       )
     }
+
+
 
 
     if(!matcher && eventType === "message"){
