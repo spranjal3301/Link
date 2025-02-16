@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     console.log("userText",userText);
     
 
-    const isReel = messaging?.[0]?.message?.attachments[0]?.type === 'ig_reel';
+    const isReel = messaging?.[0]?.message?.attachments?.[0]?.type === 'ig_reel';
     console.log("isReel",isReel);
 
 
