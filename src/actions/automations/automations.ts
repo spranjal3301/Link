@@ -166,9 +166,9 @@ export const saveTrigger = async (automationId: string, triggers: string[]) => {
 };
 
 export const saveKeyword = async (automationId: string, keyword: string) => {
-  await getUser();
+  const clerkUser = await getUser();
   try {
-    const newKeyword = await addKeywordQuery(automationId, keyword);
+    const newKeyword = await addKeywordQuery(automationId, keyword,clerkUser.id);
     if (newKeyword)
       return {
         status: 200,

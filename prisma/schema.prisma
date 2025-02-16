@@ -24,6 +24,7 @@ model User {
   subscription Subscription?
   integrations Integrations[]   //- user -> [Instagram,whatsapp,X,LinkedIn]
   automations  Automation[]
+  keywords     Keyword[]      // Optionally, you can set up a relation directly if needed
 }
 
 model Subscription {
@@ -57,9 +58,10 @@ model Automation {
   posts     Post[]
   dms       Dms[]
   keywords  Keyword[]
-  userId    String?   @db.Uuid
-  User      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String     @db.Uuid
+  User      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
 
 model Post {
   id           String      @id @default(uuid()) @db.Uuid
@@ -98,8 +100,10 @@ model Keyword {
   word         String
   automationId String?     @db.Uuid
   Automation   Automation? @relation(fields: [automationId], references: [id], onDelete: Cascade)
+  clerkId      String
+  User         User        @relation(fields: [clerkId], references: [clerkId], onDelete: Cascade)
 
-  @@unique([automationId, word]) //~this constraints ensure user cant use the same keyword on multiple automations
+  @@unique([clerkId, word])//~ unique keyword for user
 }
 
 model Trigger {

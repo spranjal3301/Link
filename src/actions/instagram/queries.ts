@@ -16,6 +16,24 @@ export const matchKeyword = async (keyword: string) => {
   });
 };
 
+export const matchUserKeyword = async (platformId: string, keyword: string) => {
+  return await db.keyword.findFirst({
+    where: {
+      word: keyword,
+      User: {
+        integrations: {
+          some: {
+            platformId: platformId,
+          },
+        },
+      },
+    },
+    select: {
+      automationId: true,
+    },
+  });
+};
+
 export const getKeywordAutomation = async (
   automationId: string,
   dm: boolean
@@ -90,12 +108,16 @@ export const getKeywordPost = async (postId: string, automationId: string) => {
 export const getChatHistory = async (sender: string, reciever: string) => {
   const history = await db.dms.findMany({
     where: {
-      AND: [{ senderId: sender }, { reciever },{Automation:{active:true}}],
+      AND: [
+        { senderId: sender },
+        { reciever },
+        { Automation: { active: true } },
+      ],
     },
     orderBy: { createdAt: "asc" },
   });
 
-  if(!history || history.length==0)return null;
+  if (!history || history.length == 0) return null;
 
   const chatSession: {
     role: "assistant" | "user";

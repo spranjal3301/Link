@@ -128,7 +128,7 @@ export const addTriggerQuery = async (
   });
 };
 
-export const addKeywordQuery = async (automationId: string, word: string) => {
+export const addKeywordQuery = async (automationId: string, word: string, clerkId: string) => {
   return await db.automation.update({
     where: {
       id: automationId,
@@ -137,6 +137,7 @@ export const addKeywordQuery = async (automationId: string, word: string) => {
       keywords: {
         create: {
           word,
+          clerkId
         },
       },
     },
