@@ -170,7 +170,7 @@ export const handleKeywordMatch = async (
     eventType === "message"
   );
 
-  console.log("automation",automation);
+  // console.log("automation",automation);
   
 
   if (!automation?.trigger || !automation?.listener) {
@@ -179,7 +179,7 @@ export const handleKeywordMatch = async (
 
   const { listener } = automation;
   const isPro = automation.User?.subscription?.plan === "PRO";
-  console.log("listener", listener);
+  // console.log("listener", listener);
 
   const handleResponse = async (
     content: string,
