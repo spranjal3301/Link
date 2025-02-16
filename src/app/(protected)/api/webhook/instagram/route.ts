@@ -49,15 +49,16 @@ export async function POST(req: NextRequest) {
 
     const matcher = await matchUserKeyword(instagramId, userText);
 
+    const isSelfReply =
+    eventType == "message"
+      ? entry.id == messaging?.[0]?.sender?.id
+      : entry.id == changes?.[0]?.value?.id;
+
+    if (isSelfReply) return createResponse("Self Reply Event", 200);
+
+
     if (matcher && matcher?.automationId && eventType) {
-      const isSelfReply =
-        eventType == "message"
-          ? entry.id == messaging?.[0]?.sender?.id
-          : entry.id == changes?.[0]?.value?.id;
 
-      console.log(isSelfReply);
-
-      if (isSelfReply) return createResponse("Self Reply Event", 200);
       console.log("message", messaging?.[0]);
       await handleKeywordMatch(
         matcher.automationId,
@@ -72,6 +73,9 @@ export async function POST(req: NextRequest) {
     if (!matcher && eventType === "message") {
       await handleOngoingAiChat(messaging, entry);
     }
+
+
+
 
     return createResponse("Success", 200);
   } catch (error) {
