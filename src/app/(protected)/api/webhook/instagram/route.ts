@@ -29,17 +29,26 @@ export async function POST(req: NextRequest) {
         
         const MessageId = messaging?.[0]?.message?.mid;
         return createResponse("Reel Reaction ❤️",200);
-        handleReelReaction(entry.id,messaging[0].sender.id,MessageId);
+        handleReelReaction(instagramId,messaging[0].sender.id,MessageId);
     }
 
     if(!userText || !instagramId)return createResponse("userText undefind",200);
+
+    console.log("webhookPayload",webhookPayload);
+    console.log("instagramId",entry);
+    console.log(messaging?.[0]?.message);
+    console.log("eventType",eventType);
+    console.log("userText",userText);
 
     const matcher = await matchUserKeyword(instagramId,userText);
 
     if(matcher && matcher?.automationId && eventType){
       const isSelfReply =  eventType == 'message' ? 
-                          (entry.id==messaging[0].sender.id) :
-                          (entry.id==changes[0].value.id);
+                          (entry.id==messaging[0]?.sender?.id) :
+                          (entry.id==changes[0]?.value?.id);
+
+      console.log(isSelfReply);
+                          
       if(isSelfReply)return createResponse("Self Reply Event",200);
 
       handleKeywordMatch(
