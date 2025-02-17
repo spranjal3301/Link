@@ -41,11 +41,11 @@ export async function POST(req: NextRequest) {
     if (!userText || !instagramId)
       return createResponse("userText undefind", 200);
 
-    console.log("webhookPayload", webhookPayload);
-    console.log("instagramId", entry);
-    console.log(messaging?.[0]?.message);
-    console.log("eventType", eventType);
-    console.log("userText", userText);
+    // console.log("webhookPayload", webhookPayload);
+    // console.log("instagramId", entry);
+    // console.log(messaging?.[0]?.message);
+    // console.log("eventType", eventType);
+    // console.log("userText", userText);
 
     const matcher = await matchUserKeyword(instagramId, userText);
 
@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
 
     if (matcher && matcher?.automationId && eventType) {
 
-      console.log("message", messaging?.[0]);
+      // console.log("message", messaging?.[0]);
       await handleKeywordMatch(
         matcher.automationId,
         eventType,

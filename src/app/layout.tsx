@@ -8,7 +8,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { siteConfig } from "@/config/site";
-
+import Head from "next/head";
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
@@ -25,6 +25,12 @@ export default function RootLayout({
   return (
     <MainProviders>
       <html lang="en">
+        <Head>
+          <meta
+            name="facebook-domain-verification"
+            content="0468xsdreif63ebqc48q0ksy5gjaye"
+          />
+        </Head>
         <body
           suppressHydrationWarning
           className={`${GeistSans.className} scroll-smooth`}
