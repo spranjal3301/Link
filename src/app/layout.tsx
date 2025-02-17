@@ -15,6 +15,9 @@ const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: siteConfig.name,
   description: siteConfig.description,
+  other: {
+    'facebook-domain-verification': '0468xsdreif63ebqc48q0ksy5gjaye',
+  },
 };
 
 export default function RootLayout({
@@ -25,12 +28,6 @@ export default function RootLayout({
   return (
     <MainProviders>
       <html lang="en">
-        <Head>
-          <meta
-            name="facebook-domain-verification"
-            content="0468xsdreif63ebqc48q0ksy5gjaye"
-          />
-        </Head>
         <body
           suppressHydrationWarning
           className={`${GeistSans.className} scroll-smooth`}
