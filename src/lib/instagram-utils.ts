@@ -83,6 +83,7 @@ export const generateTokens = async (code: string) => {
   });
 
   const token = await shortTokenRes.json();
+  return token;
   if (token.permissions.length > 0) {
     console.log(token, "got permissions");
     console.log("long token function");
