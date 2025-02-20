@@ -29,7 +29,7 @@ const Page: NextPage<Props> = ({}) => {
             </h2>
             <p className="text-neutral-500">
               These terms and conditions outline the rules and regulations for
-              the use of Link's Website, located at
+              the use of Link&apos;s Website, located at
               https://one-linkx.vercel.app/.
             </p>
           </div>
@@ -73,8 +73,8 @@ const Page: NextPage<Props> = ({}) => {
               <p className="text-neutral-500">
                 The following terminology applies to these Terms and Conditions,
                 Privacy Statement and Disclaimer Notice and all Agreements:
-                "Client", "You" and "Your" refers to you, the person log on this
-                website and compliant to the Company's terms and conditions.
+                Client, You and Your refers to you, the person log on this
+                website and compliant to the Company&apos;s terms and conditions.
               </p>
             </section>
 
@@ -270,7 +270,7 @@ const Page: NextPage<Props> = ({}) => {
                 </li>
               </ul>
               <p className="text-neutral-500 mt-4">
-                No use of Link's logo or other artwork will be allowed for
+                No use of Link&apos;s logo or other artwork will be allowed for
                 linking absent a trademark license agreement.
               </p>
             </section>
