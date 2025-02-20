@@ -5,9 +5,9 @@ interface Props {}
 
 const Page: NextPage<Props> = ({}) => {
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100">
+    <div className="min-h-screen bg-black text-gray-100">
       {/* Header */}
-      <header className="bg-gray-800 py-6 sticky top-0 z-10">
+      <header className="bg-black border py-6 sticky top-0 z-10">
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-3">
             <Shield className="w-8 h-8 text-indigo-400" />
@@ -40,7 +40,7 @@ const Page: NextPage<Props> = ({}) => {
           {/* Sections */}
           <div className="space-y-6">
             {/* Interpretation and Definitions */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-6">
                 Interpretation and Definitions
               </h2>
@@ -143,7 +143,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Types of Data Collected */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-6">
                 Types of Data Collected
               </h2>
@@ -216,7 +216,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Tracking Technologies and Cookies */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Tracking Technologies and Cookies
               </h2>
@@ -271,7 +271,7 @@ const Page: NextPage<Props> = ({}) => {
 
 
             {/* Use of Your Personal Data */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Use of Your Personal Data
               </h2>
@@ -380,7 +380,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Retention of Your Personal Data */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Retention of Your Personal Data
               </h2>
@@ -403,7 +403,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Transfer of Your Personal Data */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Transfer of Your Personal Data
               </h2>
@@ -431,7 +431,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Delete Your Personal Data */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Delete Your Personal Data
               </h2>
@@ -459,7 +459,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Disclosure of Your Personal Data */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Disclosure of Your Personal Data
               </h2>
@@ -506,7 +506,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Security of Your Personal Data */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Security of Your Personal Data
               </h2>
@@ -520,7 +520,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Children's Privacy */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Children&apos;s Privacy
               </h2>
@@ -534,7 +534,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Links to Other Websites */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Links to Other Websites
               </h2>
@@ -551,7 +551,7 @@ const Page: NextPage<Props> = ({}) => {
               </p>
             </div>
 
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Changes to this Privacy Policy
               </h2>
@@ -573,7 +573,7 @@ const Page: NextPage<Props> = ({}) => {
             </div>
 
             {/* Contact Us */}
-            <div className="bg-gray-800 rounded-lg p-6">
+            <div className="border rounded-lg p-6">
               <h2 className="text-xl font-semibold text-indigo-400 mb-4">
                 Contact Us
               </h2>
@@ -597,7 +597,7 @@ const Page: NextPage<Props> = ({}) => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-800 py-6 mt-12">
+      <footer className="bg-black border py-6 mt-12">
         <div className="container mx-auto px-4 text-center text-gray-400">
           <p>© 2025 All rights reserved.</p>
         </div>

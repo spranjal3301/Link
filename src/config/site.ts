@@ -39,11 +39,11 @@ export const footer = [
     itmes: [
       {
         name: "Privacy Policy",
-        herf: "#pricing",
+        herf: "/privacy-policy",
       },
       {
         name: "Terms of Service",
-        herf: "#",
+        herf: "/tos",
       },
       {
         name: "About Us",
@@ -56,15 +56,15 @@ export const footer = [
     itmes: [
       {
         name: "Twitter",
-        herf: "#pricing",
+        herf: "https://x.com/spranjal394",
       },
       {
-        name: "Discord",
-        herf: "#",
+        name: "LinkedIn",
+        herf: "https://www.linkedin.com/in/spranjal3301/",
       },
       {
         name: "Github",
-        herf: "#",
+        herf: "https://github.com/spranjal3301/link",
       },
     ],
   },

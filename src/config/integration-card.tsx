@@ -14,15 +14,15 @@ export const INTEGRATION_CARDS_DATA:TintegrationCard[] = [
   {
     title: "Connect Instagram",
     description:
-      "Lorem ipsum dolor sit amet consectetur. Mauris scelerisque tincidunt ultrices",
+      "Deliver fast responses to Comments, DMs,  Story Reply and Mention .",
     icon: <InstagramDuoToneBlue />,
     strategy: 'INSTAGRAM',
   },
-  {
-    title: "Connect Salesforce",
-    description:
-      "Lorem ipsum dolor sit amet consectetur. Mauris scelerisque tincidunt ultrices",
-    icon: <SalesForceDuoToneBlue />,
-    strategy: 'CRM',
-  },
+  // {
+  //   title: "Connect Salesforce",
+  //   description:
+  //     "Lorem ipsum dolor sit amet consectetur. Mauris scelerisque tincidunt ultrices",
+  //   icon: <SalesForceDuoToneBlue />,
+  //   strategy: 'CRM',
+  // },
 ];
