@@ -5,6 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { productPrices } from "@/config/site";
+import { useRouter } from "next/navigation";
 
 const toHumanPrice = (price: any, decimals = 2) => {
   return (price / 100).toFixed(decimals);
@@ -14,12 +15,15 @@ const PricingSection = () => {
   const [interval, setInterval] = useState("month");
   const [isLoading, setIsLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState("");
+  const route = useRouter();
 
   const onSubscribeClick = async (priceId: string) => {
     setActiveIndex(priceId);
     setIsLoading(true);
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    route.push('/dashboard')
     setIsLoading(false);
   };
 
@@ -58,11 +62,17 @@ const PricingSection = () => {
 
         <div className="flex w-full flex-wrap justify-center gap-4 ">
           {productPrices.map((price, idx) => (
+            <div 
+            className={cn("md:w-[40%] max-w-[95%] rounded-2xl",
+              !price.isMostPopular ? "border" : "p-[2px] bg-gradient-to-r from-main1 via-[#3B82F6] to-main2 ",
+            )}
+            key={price.id}
+            >
             <div
               key={price.id}
               className={cn(
-                "flex md:w-[40%] max-w-[95%] flex-col gap-8 rounded-2xl border p-4 ",
-                price.isMostPopular ? "border-2 border-main1 " : "",
+                "flex flex-col gap-8 rounded-2xl p-4 bg-black",
+                price.isMostPopular ? "radial--gradient" : "",
                 "relative group "
               )}
             >
@@ -125,6 +135,7 @@ const PricingSection = () => {
                   ))}
                 </ul>
               )}
+            </div>
             </div>
           ))}
         </div>

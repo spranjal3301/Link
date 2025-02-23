@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <div>
       <Header />
-      <ModalBodyContent />
+      {/* <ModalBodyContent /> */}
 
       <main className="flex flex-col w-full justify-center items-center ">
         <Hero />

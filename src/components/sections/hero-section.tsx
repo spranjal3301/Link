@@ -7,7 +7,11 @@ import AnimatedShinyText from "../ui/animated-shiny-text";
 import AnimatedGridPattern from "../ui/animated-grid-pattern";
 import HeroVideoDialog from "../ui/hero-video-dialog";
 import GetStartedBtn from "../global/Landing/get-started-btn";
-
+import { Herobanner } from "./_components/hero-banner";
+import { Herotitle } from "./_components/hero-title";
+import { Herosubtitle } from "./_components/hero-subtitle";
+import HeroButton from "./_components/hero-button";
+import HeroVideo from "./_components/hero-video";
 
 export default function Hero() {
   return (
@@ -26,17 +30,12 @@ export default function Hero() {
 
               <Herosubtitle />
 
-              <GetStartedBtn />
+              {/* <GetStartedBtn /> */}
+              <HeroButton />
             </div>
           </AnimatedGridPatternDemo>
 
-          <HeroVideoDialog
-            className="md:max-w-5xl w-[90%] mx-auto"
-            animationStyle="from-center"
-            videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-            thumbnailSrc="https://startup-template-sage.vercel.app/hero-dark.png"
-            thumbnailAlt="Hero Video"
-          />
+          <HeroVideo />
         </div>
       </div>
     </section>
@@ -77,59 +76,6 @@ function AnimatedGridPatternDemo({ children }: { children: React.ReactNode }) {
           "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12"
         )}
       />
-    </div>
-  );
-}
-
-function Herobanner() {
-  return (
-    <div
-      className={cn(
-        "group rounded-full border border-black/5 bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800",
-
-        "backdrop-filter-[12px] inline-flex h-7 items-center justify-between  bg-white/10 text-xs"
-      )}
-    >
-      <AnimatedShinyText className="inline-flex items-center justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
-        <span>✨ Introducing Link</span>
-        <MessageCircleQuestion className="ml-1 size-4 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
-      </AnimatedShinyText>
-    </div>
-  );
-}
-
-function Herotitle() {
-  return (
-    <div className="relative max-w-5xl flex flex-col gap-4 md:items-center lg:flex-row">
-      <h1
-        className={cn(
-          "text-black dark:text-white",
-          "relative mx-0   md:mx-auto md:px-4 md:py-2 py-0",
-          "text-balance font-semibold tracking-tighter md:text-center",
-          "text-5xl sm:text-7xl md:text-7xl lg:text-7xl"
-        )}
-      >
-        Automate your Instagram DMs with{" "}
-        <span className="inline-block bg-gradient-to-r from-main1 to-main2 bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
-          AI.
-        </span>
-      </h1>
-    </div>
-  );
-}
-
-function Herosubtitle() {
-  return (
-    <div className="max-w-5xl w-full text-balance text-base tracking-tight text-black dark:font-medium dark:text-white md:text-center md:text-lg ">
-      {/* Deliver fast responses to Comments , DMs ,StoryReply, and Mention ,Automatically answer every reaction using AI power personal assistant that sounds 
-exactly like you!  */}
-      <span className="hidden md:inline">
-        Deliver fast responses to <b>Comments</b>,<b> DMs</b>,{" "}
-        <b> Story Reply</b> and <b>Mention</b> .
-      </span>
-      {/* <br /> */}
-      Automatically answer every reaction using AI power personal assistant that
-      sounds exactly like you!
     </div>
   );
 }
