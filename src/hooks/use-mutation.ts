@@ -1,6 +1,7 @@
 import {
   activateAutomation,
   createAutomation,
+  deleteAutomation,
   deleteKeyword,
   saveKeyword,
   saveListener,
@@ -15,6 +16,7 @@ import {
   addTriggerKey,
   createAutomationKey,
   createListenerKey,
+  deleteAutomationKey,
   deleteKeywordKey,
   getAllAutomationsKey,
   getAutomationInfoKey,
@@ -28,11 +30,17 @@ import {
   useMutationState,
 } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast"
 import { z } from "zod";
 import { useZodForm } from "./use-zod-from";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { TRIGGER } from "@/redux/reducer/automation";
+import usePaths from "./use-nav";
+import { useRouter } from "next/navigation";
+import { title } from "process";
+
+
+
 
 //` Helper hooks
 //- for mutation
@@ -43,18 +51,17 @@ export const useMutationData = (
   onSuccess?: Function
 ) => {
   const queryClient = getQueryClient();
+  const { toast } = useToast()
   return useMutation({
     mutationKey: [mutationKey],
     mutationFn,
     onSuccess: (data) => {
       if (onSuccess) onSuccess();
-      //-UI update
-      toast(data?.success || data?.status==200 ? "Success" : "Error", {
-        description: data.message,
-        action: {
-          label: "Undo",
-          onClick: () => console.log("Undo"),
-        },
+      
+      toast({
+        variant: data?.success && data?.status==200 ? "success": "destructive",
+        title:data?.success && data?.status==200 ? `✅Success` : "❌Error",
+        description: data.message,  
       });
     },
     onSettled: async () => {
@@ -82,14 +89,25 @@ export const useMutationDataState = (mutationKey: string) => {
 
 //`Utils hooks
 export const useCreateAutomation = (automationId?: string) => {
+  const { pathNames , page } = usePaths();
+  const routes = useRouter();
+  const onSuccess = () => {
+    if(page == 'automations')
+      routes.replace(`${pathNames}/${automationId}`);
+    else
+      routes.replace(`${pathNames}/automations/${automationId}`);
+  }
+
   return useMutationData(
     createAutomationKey,
     () => createAutomation(automationId),
-    getAllAutomationsKey
+    getAllAutomationsKey,
+    onSuccess
   );
 };
 
 export const useEditAutomation = (automationId: string) => {
+  const { toast } = useToast()
   const [edit, setEdit] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const enableEdit = () => setEdit(true);
@@ -113,7 +131,11 @@ export const useEditAutomation = (automationId: string) => {
       } else {
         disableEdit();
         //? UI Update
-        toast("Invaild", { description: "Automation Name can`t be Empty" });
+        toast({
+          variant: "warning",
+          title:"⚠️Invaild",
+          description: "Automation Name can`t be Empty"
+         });
       }
     }
   };
@@ -251,3 +273,13 @@ export const useActivateAutomation = (automationId: string) => {
     getAutomationInfoKey
   );
 };
+
+export const useDeleteAutomation = (automationId: string) => {
+  return useMutationData(
+    deleteAutomationKey,
+    () => deleteAutomation(automationId),
+    getAllAutomationsKey
+  )
+}
+
+

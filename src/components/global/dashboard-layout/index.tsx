@@ -29,7 +29,7 @@ const MainLayout = ({ children,slug }: { children: React.ReactNode,slug:string }
       className={cn(
         "rounded-md h-full transition-[margin-left] ease-in-out duration-300",
         " lg:pl-10 py-5 px-2",
-        isSidebarOpen ? "lg:ml-[250px]" : "lg:ml-[60px]"
+        isSidebarOpen ? "lg:ml-[215px]" : "lg:ml-[52px]"
       )}
     >
       <div>

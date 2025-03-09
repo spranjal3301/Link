@@ -15,6 +15,7 @@ function CreateAutomation({}: Props) {
 
   const { mutate, isPending } = useCreateAutomation(automationId);
 
+
   return (
     <Button
       className="lg:px-10 py-6 bg-gradient-to-br hover:opacity-80 text-white rounded-full

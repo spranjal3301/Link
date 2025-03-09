@@ -7,7 +7,7 @@ interface Props {
 }
 
 const Container: NextPage<Props> = ({className,children}) => {
-  return <div className={cn("container min-h-screen flex justify-center items-center",className)}>{children}</div>
+  return <div className={cn("min-[100dvh] flex justify-center items-center",className)}>{children}</div>
 }
 
 export default Container;

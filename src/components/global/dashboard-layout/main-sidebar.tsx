@@ -5,6 +5,7 @@ import DesktopSidebar from "./desktop-sidebar";
 import { MobileNav } from "./mobile-nav";
 import usePaths from "@/hooks/use-nav";
 import { SidebarMenu } from "@/config/sidebar";
+import { isUUID } from "@/lib/utils";
 
 
 type Props = {
@@ -18,7 +19,7 @@ const MainSidebar = ({ slug }: Props) => {
   const {page} = usePaths();
   const handleExpandToggle = () => setIsExpanded(!isExpanded);
   const handleItemClick = () => setIsExpanded(false);
-  const currentPage = page===slug ? 'home': page;
+  const currentPage = page===slug ? 'home': isUUID(page) ? 'automations' : page;
 
   const icon = SidebarMenu.find(({label})=>{
     return label == currentPage;

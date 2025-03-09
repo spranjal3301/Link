@@ -18,6 +18,10 @@ const nextConfig = {
             protocol: 'https',
             hostname:"startup-template-sage.vercel.app"
           },
+          {
+            protocol: 'https',
+            hostname:"**"
+          },
         ],
       },
 };

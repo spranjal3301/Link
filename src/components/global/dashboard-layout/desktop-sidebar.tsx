@@ -16,12 +16,12 @@ const DesktopSidebar: NextPage<Props> = ({ slug }) => {
   const { page } = usePaths();
   const {isSidebarOpen} = useSidebar();
   
-  return (
+  return ( 
     <TooltipProvider>
       <div className={cn("fixed left-0 top-0 radial hidden lg:inline-block m-3 overflow-hidden ",
-        "border-[1px] border-[#545454] bg-gradient-to-b from-main1 via-[#171717] to-main1 ",
+        "border-[1px] border-[#545454] bg-gradient-to-b from-[#3352CC] via-[#171717] to-[#3352CC] ",
         "-translate-x-full lg:translate-x-0 transition-[width] ease-in-out duration-300",
-        isSidebarOpen ? "w-[250px] rounded-3xl bottom-0 ":"w-[60px] rounded-xl ",
+        isSidebarOpen ? "w-[215px] rounded-3xl bottom-0 ":"w-[52px] rounded-xl ",
         ""
       )}>
         <SidebarContent slug={slug} page={page} />

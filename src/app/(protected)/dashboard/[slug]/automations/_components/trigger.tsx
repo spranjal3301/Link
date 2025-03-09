@@ -23,7 +23,7 @@ const Trigger = ({ id }: Props) => {
 
   if (data?.data && data.data.trigger.length > 0) {
     return (
-      <div className="flex flex-col gap-y-6 items-center">
+      <div className="flex flex-col gap-y-6 items-center overflow-y-scroll">
         <ActiveTrigger
           type={data.data.trigger[0].type}
           keywords={data.data.keywords}
@@ -68,15 +68,15 @@ const Trigger = ({ id }: Props) => {
           >
             <div className="flex gap-x-2 items-center">
               {trigger.icon}
-              <p className="font-bold">{trigger.label}</p>
+              <p className="font-bold text-sm">{trigger.label}</p>
             </div>
-            <p className="text-sm font-light">{trigger.description}</p>
+            <p className="font-light text-xs">{trigger.description}</p>
           </div>
         ))}
         <Keywords id={id} />
         <Button
           onClick={onSaveTrigger}
-          disabled={types?.length === 0}
+          disabled={types?.length === 0 ||  !data?.data?.keywords || data?.data?.keywords.length == 0 }
           className="bg-gradient-to-br from-[#3352CC] font-medium text-white to-[#1C2D70]"
         >
           <Loader state={isPending}>Create Trigger</Loader>

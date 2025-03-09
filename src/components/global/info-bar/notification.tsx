@@ -1,13 +1,9 @@
 import { Button } from '@/components/ui/button'
+import { NotificationPopover } from '@/components/ui/notification-popover'
 import { Bell } from 'lucide-react'
 
 export const Notifications = () => {
   return (
-    <Button className="bg-white rounded-full py-6">
-      <Bell
-        color="#3352CC"
-        fill="#3352CC"
-      />
-    </Button>
+    <NotificationPopover buttonClassName={"bg-white rounded-full p-6"}/>
   )
 }

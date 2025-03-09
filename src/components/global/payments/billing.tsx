@@ -9,7 +9,7 @@ const Billing = (props: Props) => {
   //-Done: feach Billing info
   const { data } = useQueryUser()
   return (
-    <div className="flex lg:flex-row flex-col gap-5 w-full lg:w-10/12 xl:w-8/12 container">
+    <div className="flex lg:flex-row flex-col gap-5 w-full lg:w-10/12 xl:w-8/12 mx-auto">
     <PaymentCard
       current={data?.data?.subscription?.plan!}
       label="FREE"

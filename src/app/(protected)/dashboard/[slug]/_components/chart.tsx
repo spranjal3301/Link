@@ -37,7 +37,7 @@ const Chart = (props: Props) => {
     <Card className="border-none p-0">
       <CardContent className="p-0">
         <ResponsiveContainer
-          height={300}
+          height={240}
           width={'100%'}
         >
           <ChartContainer config={chartConfig}>

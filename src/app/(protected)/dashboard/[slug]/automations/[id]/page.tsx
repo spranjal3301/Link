@@ -1,13 +1,12 @@
 import { NextPage } from "next";
 import AutomationBreadCrumb from "../_components/automation-bread-crumb";
-import { Warning } from "@/icons";
-import Trigger from "../_components/trigger";
 import { getAutomationInfo } from "@/actions/automations/automations";
 import { getQueryClient } from "@/lib/query-client";
 import { prefetchAutomationInfo } from "@/tanstack-query/prefetch";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import ThenNode from "../_components/then-node";
 import PostNode from "../_components/post-node";
+import WhenNode from "../_components/when-node";
 
 interface Props {
   params: { id: string };
@@ -16,7 +15,7 @@ interface Props {
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const info = await getAutomationInfo(params.id);
   return {
-    title: `${info.data?.name} | Automation` ,
+    title: `${info.data?.name} | Automation`,
   };
 }
 
@@ -29,16 +28,11 @@ const Page: NextPage<Props> = async ({ params }) => {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className=" flex flex-col items-center ">
         <AutomationBreadCrumb id={params.id} />
-        {/*//~ WhenNode  */}
-        <div className="w-full lg:w-10/12 xl:w-5/12 p-5 rounded-xl flex flex-col bg-[#1D1D1D] gap-y-3">
-          <div className="flex gap-x-2">
-            <Warning />
-            When...
-          </div>
-          <Trigger id={params.id} />
-        </div>
+        <div className="flex flex-col items-center w-full p-2 mb-10 gap-7">
+        <WhenNode id={params.id} />
         <ThenNode id={params.id} />
         <PostNode id={params.id} />
+        </div>
       </div>
     </HydrationBoundary>
   );

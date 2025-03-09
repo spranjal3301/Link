@@ -34,7 +34,7 @@ const Keywords = ({ id }: Props) => {
             (word) =>
              ( word.id !== optimisticKeyword?.variables.id  || deletedData?.variables?.id !==word.id ) && (
                 <div
-                  className="bg-background-90 flex items-center gap-x-2 capitalize text-text-secondary py-1 px-4 rounded-full"
+                  className="bg-background-90 flex items-center gap-x-2 capitalize text-text-secondary py-1 border px-2 rounded-full text-xs"
                   key={word.id}
                 >
                   <p>{word.word}</p>
@@ -54,12 +54,12 @@ const Keywords = ({ id }: Props) => {
           </div>
         )}
         <Input
-          placeholder="Add keyword..."
+          placeholder="Add keyword (Press Enter to Save)"
           //   style={{
           //     width: Math.min(Math.max(keyword.length || 10, 2), 50) + "ch",
           //   }}
           value={keyword}
-          className="p-0 bg-transparent ring-0 border-none outline-none "
+          className="p-1 bg-transparent ring-0 border-none outline-none "
           onChange={onValueChange}
           onKeyUp={onKeyPress}
         />

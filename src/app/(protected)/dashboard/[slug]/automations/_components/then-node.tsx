@@ -19,7 +19,7 @@ const ThenNode = ({ id }: Props) => {
   if (!AutomationInfo?.data?.listener) return;
 
   return (
-    <div className="w-full lg:w-10/12 relative xl:w-6/12 p-5 rounded-xl flex flex-col bg-[#1D1D1D] gap-y-3 mt-8">
+    <div className="w-full lg:w-10/12 relative xl:w-6/12 p-5 rounded-xl flex flex-col bg-[#1D1D1D] gap-y-3">
       <div className="absolute h-20 left-1/2 bottom-full flex flex-col items-center z-50">
         <span className="h-[9px] w-[9px] bg-connector/10 rounded-full" />
         <Separator
@@ -39,21 +39,20 @@ const ThenNode = ({ id }: Props) => {
           ) : (
             <SmartAi />
           )}
-          <p className=" text-lg">
+          <p className=" text-base">
             {AutomationInfo.data.listener.listener === "MESSAGE"
               ? "Send the user a message."
               : "Let Smart AI take over"}
           </p>
         </div>
-        <p className="font-light text-text-secondary">
+        <p className="font-light text-text-secondary text-sm overflow-y-scroll max-h-32">
           {AutomationInfo.data.listener.prompt}
         </p>
       </div>
       {AutomationInfo.data.posts.length > 0 ? (
         <></>
       ) : commentTrigger ? (
-        <PostButton id={id} /> 
-        // "hello"
+        <PostButton id={id} />
       ) : (
         <></>
       )}

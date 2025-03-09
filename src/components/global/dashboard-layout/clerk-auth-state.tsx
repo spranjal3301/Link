@@ -21,7 +21,7 @@ function ClerkAuthState({}: Props) {
         <SignInButton>
           <Button
             className="rounded-xl 
-              bg-[#252525] 
+              bg-[#000000] 
               text-white 
               hover:bg-[#252525]/70
               "

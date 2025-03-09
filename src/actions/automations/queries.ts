@@ -73,6 +73,14 @@ export const updateAutomation = async (
   });
 };
 
+export const deleteAutomationQuery = async (
+  automationId: string
+) => {
+  return await db.automation.delete({
+    where: { id: automationId }
+  });
+};
+
 export const addListenerQuery = async (
   automationId: string,
   listener: Tlistener,

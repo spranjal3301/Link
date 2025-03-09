@@ -8,9 +8,9 @@ import MetricsCard from "./_components/metrics-card";
 interface Props {}
 
 const Page: NextPage<Props> = ({}) => {
-  //-Done:
+  //-Done:` 
   return (
-    <div className="flex flex-col gap-y-10">
+    <div className="flex flex-col gap-y-5">
       <div className="flex gap-5 lg:flex-row flex-col ">
         {DASHBOARD_CARDS.map((card) => (
           <DoubleGradientCard
@@ -19,10 +19,11 @@ const Page: NextPage<Props> = ({}) => {
           />
         ))}
       </div>
-      <div className="border-[1px] relative border-in-active/50 p-5 rounded-xl">
-        <span className="flex gap-x-1 z-50 items-center">
+
+      <div className="border-[1px] relative border-in-active/50 p-3 rounded-xl">  
+        <span className="flex gap-x-1  items-center">
           <BarDuoToneBlue />
-          <div className="z-50">
+          <div className="z-10">
             <h2 className="text-2xl font-medium text-white">
               Automated Activity
             </h2>

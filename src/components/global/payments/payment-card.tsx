@@ -16,14 +16,14 @@ const PaymentCard = ({ current, label, landing }: Props) => {
       className={cn(
         label !== current
           ? "bg-in-active"
-          : "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500",
-        "p-[2px] rounded-xl overflow-hidden"
+          : "bg-gradient-to-r from-main1 via-[#3B82F6] to-main2 ",
+        "p-[2px] rounded-xl overflow-hidden "
       )}
     >
       <div
         className={cn(
           landing && "radial--gradient--pink",
-          "flex flex-col rounded-xl pl-5 py-5 pr-10 bg-background-90 h-full"
+          "flex flex-col rounded-xl pl-5 py-5 pr-10 bg-background-90 h-full radial--gradient--automations"
         )}
       >
         {landing ? (
@@ -40,11 +40,11 @@ const PaymentCard = ({ current, label, landing }: Props) => {
               : "Upgrade"}
           </h2>
         )}
-        <p className="text-text-secondary text-sm mb-2">
-          This is what your plan covers for automations and Ai features
+        <p className="text-text-secondary text-sm mb-2 ">
+          This is what your plan covers for automations and AI features
         </p>
         {label === "PRO" ? (
-          <span className="bg-gradient-to-r text-3xl from-indigo-500 via-purple-500 font-bold to-pink-500 bg-clip-text text-transparent">
+          <span className="text-3xl theme-gradient ">
             Smart AI
           </span>
         ) : (
@@ -60,7 +60,7 @@ const PaymentCard = ({ current, label, landing }: Props) => {
 
         {productPrices[label === "PRO" ? 1 : 0].features.map((i) => (
           <p key={i} className="mt-2 text-muted-foreground flex gap-2 ">
-            <CircleCheck className="text-indigo-500" />
+            <CircleCheck className="text-main2" />
             {i}
           </p>
         ))}

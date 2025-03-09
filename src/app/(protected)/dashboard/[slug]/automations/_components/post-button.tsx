@@ -33,10 +33,10 @@ const PostButton = ({ id }: Props) => {
     <TriggerButton label="Attach a post">
       {(data?.status === 200 && data?.data?.data && data?.data?.data.length)? (
         <div className="flex flex-col gap-y-3 w-full">
-          <div className="flex flex-wrap w-full gap-3">
+          <div className="flex flex-wrap w-full gap-3 overflow-y-scroll max-h-56 justify-center">
             {data.data.data.map((post: InstagramPostProps) => (
               <div
-                className="relative w-4/12 aspect-square rounded-lg cursor-pointer overflow-hidden"
+                className="relative w-[25%] aspect-square rounded-lg cursor-pointer overflow-hidden"
                 key={post.id}
                 onClick={() =>
                   onSelectPost({
@@ -68,7 +68,7 @@ const PostButton = ({ id }: Props) => {
             ))}
           </div>
           <Button
-            onClick={mutate} //?WIP : maybe mutate()
+            onClick={()=>mutate({})}
             disabled={posts.length === 0}
             className="bg-gradient-to-br w-full from-[#3352CC] font-medium text-white to-[#1C2D70]"
           >

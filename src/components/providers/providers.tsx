@@ -5,7 +5,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import { ViewTransitions } from "next-view-transitions";
 import QueryProviders from "./query-provider";
-import { Toaster } from "@/components/ui/sonner";
+// import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster"
 import ReduxProvider from "./redux-provider";
 import Script from "next/script";
 
@@ -15,7 +16,7 @@ interface Props {
 
 const ChildProviders: React.FC<Props> = ({ children }) => {
   return (
-    <div className="flex min-h-[100dvh] w-full flex-col justify-center  scroll-smooth bg-background antialiased">
+    <div className="flex min-h-[100dvh] w-full flex-col justify-center  scroll-smooth antialiased">
       <ThemeProvider
         attribute="class"
         defaultTheme="dark"

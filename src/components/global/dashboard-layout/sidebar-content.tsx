@@ -10,22 +10,26 @@ import SidebarToggle from './sidebar-toggle';
 import useSidebar from '@/hooks/use-sidebar';
 import { cn } from '@/lib/utils';
 import { Ellipsis } from 'lucide-react';
+import Link from 'next/link';
 
 interface Props {
     slug: string;
     page: string;
     onItemClick?: () => void;
+    className?:string;
 }
 
-const SidebarContent: NextPage<Props> = ({page ,slug,onItemClick}) => {
+const SidebarContent: NextPage<Props> = ({page ,slug,onItemClick,className}) => {
   const {isSidebarOpen} = useSidebar();
 
   return (
     <div
-        className="flex flex-col gap-y-5 w-full h-full p-3 bg-transparent md:bg-[#0e0e0e] bg-opacity-90 bg-clip-padding backdrop-filter 
-        backdrop--blur__safari backdrop-blur-3xl pb-10 rounded-xl"
+        className={cn(
+          "flex flex-col gap-y-5 w-full h-full p-3 bg-[#0e0e0e]  bg-opacity-90 bg-clip-padding backdrop-filter backdrop--blur__safari backdrop-blur-3xl pb-10 rounded-xl  ",
+          className
+        )}
       >
-        <div className={cn("flex items-center ",
+        <div className={cn("flex items-center scale-90",
           isSidebarOpen ? "gap-x-2 py-5 px-3" : "py-2",
         )}>
           <SidebarToggle/>
@@ -60,23 +64,23 @@ const SidebarContent: NextPage<Props> = ({page ,slug,onItemClick}) => {
               isSidebarOpen ? "gap-x-2" : "justify-center" ,
             )} >
             <ClerkAuthState />
-            <p className={cn("text-[#9B9CA0]",
+            <p className={cn("text-[#9B9CA0] text-sm",
               isSidebarOpen ? "" : "hidden" ,
             )}>
               Profile
             </p>
           </div>
           
-          <div className={cn("flex ",
+          <Link href={"/help"} className={cn("flex ",
               isSidebarOpen ? "gap-x-3" : "justify-center" ,
             )} >
             <HelpDuoToneWhite />
-            <p className={cn("text-[#9B9CA0]",
+            <p className={cn("text-[#9B9CA0] text-sm",
               isSidebarOpen ? "" : "hidden" ,
             )}>
               Help
             </p>
-          </div>
+          </Link>
         </div>
 
 
@@ -88,7 +92,7 @@ const SidebarContent: NextPage<Props> = ({page ,slug,onItemClick}) => {
          >
             <UpgradeCard/>
           </div>
-        </SubscriptionPlan> 
+        </SubscriptionPlan>  
 
 
       </div>

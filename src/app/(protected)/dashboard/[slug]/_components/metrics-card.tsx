@@ -23,7 +23,7 @@ const MetricsCard = (props: Props) => {
       {[1, 2].map((i) => (
         <div
           key={i}
-          className="p-5 border-[1px] flex flex-col gap-y-20 rounded-xl w-full lg:w-6/12"
+          className="p-5 border-[1px] flex flex-col gap-y-10 rounded-xl w-full lg:w-6/12"
         >
           {i === 1 ? (
             <div>

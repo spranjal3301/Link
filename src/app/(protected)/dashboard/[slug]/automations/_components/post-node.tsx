@@ -33,7 +33,7 @@ const PostNode = ({ id }: Props) => {
       <div className="bg-background-80 p-3 rounded-xl flex flex-col gap-y-2">
         <div className="flex gap-x-2 items-center">
           <InstagramBlue />
-          <p className="font-bold text-lg">These posts</p>
+          <p className="font-bold text-sm">These posts</p>
         </div>
         <div className="flex gap-x-2 flex-wrap mt-3">
           {automationInfo.data.posts.map((post) => (

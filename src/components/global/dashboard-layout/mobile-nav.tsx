@@ -2,16 +2,14 @@ import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 import SidebarContent from "./sidebar-content";
 
-
-
 interface MobileNavProps {
   isExpanded: boolean;
   currentPage?: string;
   onExpandToggle: () => void;
   onItemClick: () => void;
-  icon:React.ReactNode;
-  page:string;
-  slug:string;
+  icon: React.ReactNode;
+  page: string;
+  slug: string;
 }
 
 export function MobileNav({
@@ -21,7 +19,7 @@ export function MobileNav({
   onExpandToggle,
   onItemClick,
   page,
-  slug
+  slug,
 }: MobileNavProps) {
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex justify-center items-end px-4 pb-6">
@@ -37,19 +35,25 @@ export function MobileNav({
           "max-w-lg transition-all duration-200 ease-in-out",
           "bg-gradient-to-b from-white/95 via-gray-50/95 to-white/95",
           "dark:from-zinc-900/90 dark:via-zinc-800/90 dark:to-zinc-900/90",
+          // "dark:bg-black radial--double--gradient--cards--top",
           "shadow-[0_2px_20px_-2px_rgba(0,0,0,0.15)]",
           "backdrop-blur-md cursor-pointer",
           "border border-[rgba(200,200,200,0.8)] dark:border-[rgba(70,70,70,0.7)]",
           isExpanded
             ? "h-[80vh] rounded-[28px] w-full"
-            : "h-12 rounded-[28px] w-1/2"
+            : "h-12 rounded-[28px] w-1/2 dark:bg-black radial--double--gradient--cards--top"
         )}
         onClick={() => !isExpanded && onExpandToggle()}
       >
         {isExpanded ? (
           <div className="h-full flex flex-col">
             <div className="flex-1 px-4 py-2">
-                <SidebarContent page={page} slug={slug} onItemClick={onItemClick} />
+              <SidebarContent
+                page={page}
+                slug={slug}
+                onItemClick={onItemClick}
+                className="bg-transparent"
+              />
             </div>
 
             <div className="p-4 border-t border-zinc-200 dark:border-zinc-800">

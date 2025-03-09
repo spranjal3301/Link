@@ -24,10 +24,7 @@ function InfoBar({ slug }: Props) {
         <CreateAutomation />
         <Notifications />
       </div>
-      <MainBreadCrumb
-      page={page === slug ? 'Home' : page}
-      slug={slug}
-    />
+      <MainBreadCrumb page={page === slug ? "Home" : page} slug={slug} />
     </div>
   );
 }
@@ -37,22 +34,24 @@ type MBC_Props = {
   slug?: string;
 };
 
-
 const MainBreadCrumb = ({ page, slug }: MBC_Props) => {
   return (
-    <div className="flex flex-col items-start">
+    <div className="flex flex-col md:flex-row items-start md:gap-80">
+      <span className="radial--gradient inline-flex py-5 md:py-10 pr-16 gap-x-2 items-center">
+        {PAGE_ICON[page.toUpperCase()]}
+        <h2 className="font-semibold text-xl md:text-3xl capitalize">{page}</h2>
+      </span>
+
       {page === "Home" && (
-        <div className="flex justify-center w-full">
+        <div className="flex w-full justify-center md:justify-start">
           <div className="radial--gradient lg:w-4/12 py-5 flex flex-col items-center">
             <p className="text-text-secondary text-lg">Welcome back</p>
-            <h2 className="capitalize text-4xl font-medium">{slug}!</h2>
+            <h2 className="capitalize text-xl md:text-4xl font-medium">
+              {slug!='null' ? slug : ""}!
+            </h2>
           </div>
         </div>
       )}
-      <span className="radial--gradient inline-flex py-5 pr-16 gap-x-2 items-center">
-        {PAGE_ICON[page.toUpperCase()]}
-        <h2 className="font-semibold text-3xl capitalize">{page}</h2>
-      </span>
     </div>
   );
 };

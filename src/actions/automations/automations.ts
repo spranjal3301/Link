@@ -8,6 +8,7 @@ import {
   addPostsQuery,
   addTriggerQuery,
   createAutomationQuery,
+  deleteAutomationQuery,
   deleteKeywordQuery,
   findAutomation,
   getAutomations,
@@ -46,13 +47,15 @@ export const createAutomation = async (automationId?: string) => {
       clerkUser.id,
       automationId
     );
-    if (newAutomation)
+    if (newAutomation){
       return {
         status: 200,
         success: true,
         message: "Automation created",
         data: newAutomation,
       };
+    }
+      
 
     return {
       status: 404,
@@ -110,6 +113,32 @@ export const updateAutomationName = async (
     return { status: 500, success: false, message: "Internal server error" };
   }
 };
+
+export const deleteAutomation = async (automationId: string) => {
+  const clerkUser = await getUser();
+  try {
+    const res = await deleteAutomationQuery(
+      automationId
+    );
+    if (res){
+      return {
+        status: 200,
+        success: true,
+        message: "Automation Deleted",
+        data: res,
+      };
+    }
+      
+
+    return {
+      status: 404,
+      success: false,
+      message: "Oops! something went wrong",
+    };
+  } catch (error) {
+    return { status: 500, success: false, message: "Internal server error" };
+  }
+}
 
 export const saveListener = async (
   automationId: string,
