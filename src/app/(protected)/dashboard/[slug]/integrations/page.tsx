@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import IntegrationCard from "./_components/integration-card";
 import { INTEGRATION_CARDS_DATA } from "@/config/integration-card";
+import Link from "next/link";
 
 interface Props {}
 
@@ -19,6 +20,10 @@ const Page: NextPage<Props> = ({}) => {
         </h3>
         <p className="text-neutral-500">
         For Instagram integrations,  <span className="text-red-500">we require Instagram advance permissions </span>, which can only be obtained through a complete app review by meta.
+        </p>
+        <p className="text-neutral-500">
+          If your want to integration your instagram contact to{" "} 
+          <Link className="text-blue-500" href={'https://www.linkedin.com/in/spranjal3301/'}>developer</Link>
         </p>
       </div>
     </div>
