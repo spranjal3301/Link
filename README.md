@@ -291,6 +291,45 @@ spranjal3301-link/
 
 ---
 
+## env example file
+  ```bash
+
+DATABASE_URL=""
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+
+
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
+NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
+
+
+NEXT_PUBLIC_RAZORPAY_KEY_ID=
+RAZORPAY_KEY_ID=
+RAZORPAY_KEY_SECRET=
+RAZORPAY_SUBSCRIPTION_ID_MONTHLY=
+RAZORPAY_SUBSCRIPTION_ID_YEARLY=
+RAZORPAY_WEBHOOK_SECRET=
+
+#- change to real credenials
+MAILTRAP_USERNAME=
+MAILTRAP_PASSWORD=
+
+
+
+NEXT_PUBLIC_HOST_URL=http://localhost:3000
+
+INSTAGRAM_BASE_URL=https://graph.instagram.com
+INSTAGRAM_CLIENT_ID=
+INSTAGRAM_CLIENT_SECRET=
+INSTAGRAM_TOKEN_URL=https://api.instagram.com/oauth/access_token
+INSTAGRAM_EMBEDDED_OAUTH_URL=
+
+GEMINI_API_KEY=
+  ```
+
 ## Running the Application
 
 - **Development Mode:**
@@ -337,7 +376,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-For questions or support, please reach out at [your-email@example.com].
+For questions or support, please reach out at [spranjal394@gmail.com].
 
 ---
 
