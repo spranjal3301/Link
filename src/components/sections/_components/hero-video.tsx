@@ -16,7 +16,7 @@ function HeroVideo({}: Props) {
       <HeroVideoDialog
         className="md:max-w-5xl w-[90%] mx-auto"
         animationStyle="from-center"
-        videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
+        videoSrc="https://www.youtube.com/embed/H5WWMUwv9UQ?si=AztIh5L4XwSYmAgH"
         thumbnailSrc="https://startup-template-sage.vercel.app/hero-dark.png"
         thumbnailAlt="Hero Video"
       />
