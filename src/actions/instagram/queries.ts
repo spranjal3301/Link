@@ -2,24 +2,14 @@
 
 import { db } from "@/lib/prisma";
 
-export const matchKeyword = async (keyword: string) => {
-  return await db.keyword.findFirst({
-    where: {
-      word: {
-        equals: keyword,
-        mode: "insensitive",
-      },
-      Automation: {
-        active: true,
-      },
-    },
-  });
-};
 
 export const matchUserKeyword = async (platformId: string, keyword: string) => {
   return await db.keyword.findFirst({
     where: {
-      word: keyword,
+      word:{
+        equals: keyword,
+        mode: "insensitive",
+      },
       User: {
         integrations: {
           some: {
