@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       ? "comment"
       : null;
     const userText = messaging?.[0]?.message?.text ?? changes?.[0]?.value?.text;
-    console.log("userText", userText);
+    // console.log("userText", userText);
 
     const isReel =
       messaging?.[0]?.message?.attachments?.[0]?.type === "ig_reel";
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       handleReelReaction(instagramId, messaging[0].sender.id, MessageId);
     }
 
-    console.log("instagramId",instagramId)
+
     if (!userText || !instagramId)
       return createResponse("userText undefind", 200);
 
@@ -49,6 +49,8 @@ export async function POST(req: NextRequest) {
     console.log("userText", userText);
 
     const matcher = await matchUserKeyword(instagramId, userText);
+
+    console.log("matcher", matcher);
 
     const isSelfReply =
     eventType == "message"
