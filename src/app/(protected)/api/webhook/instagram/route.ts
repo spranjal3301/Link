@@ -38,14 +38,15 @@ export async function POST(req: NextRequest) {
       handleReelReaction(instagramId, messaging[0].sender.id, MessageId);
     }
 
+    console.log("instagramId",instagramId)
     if (!userText || !instagramId)
       return createResponse("userText undefind", 200);
 
-    // console.log("webhookPayload", webhookPayload);
-    // console.log("instagramId", entry);
-    // console.log(messaging?.[0]?.message);
-    // console.log("eventType", eventType);
-    // console.log("userText", userText);
+    console.log("webhookPayload", webhookPayload);
+    console.log("instagramId", entry);
+    console.log(messaging?.[0]?.message);
+    console.log("eventType", eventType);
+    console.log("userText", userText);
 
     const matcher = await matchUserKeyword(instagramId, userText);
 
